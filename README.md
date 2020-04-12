@@ -23,3 +23,8 @@
 > 在网络上传输数据时，消息需要被拆分成较小的数据块，才适合在相应的网络环境上传输。RTMP协议中规定，消息在网络上传输时被拆分成消息块（Chunk）。消息块首部（Chunk Header）有三部分组成：用于标识本块的Chunk Basic Header，用于标识本块负载所属消息的Chunk Message Header，以及当时间戳溢出时才出现的Extended Timestamp。
 ### 报文格式
 ![报文格式](./image/rtmp-chunk.jpeg)
+
+- Chunk Basic Header
+格式
+|--|--|
+| fmt | cs id| 
