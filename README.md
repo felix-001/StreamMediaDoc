@@ -10,13 +10,13 @@
 - Message Type ID在1-7的消息用于协议控制，这些消息一般是RTMP协议自身管理要使用的消息，用户一般情况下无需操作其中的数据。
 - Message Type ID为8，9的消息分别用于传输音频和视频数据、18是脚本
 - Message Type ID为15-20的消息用于发送AMF编码的命令，负责用户与服务器之间的交互，比如播放，暂停等等。
-#### Payload Length
+-  Payload Length
 包长度
-#### Time Stamp
+- Time Stamp
 时间戳
-#### Stream ID
+- Stream ID
 流ID
-#### Message Body
+- Message Body
 音视频裸流(h264/aac/g711)
 
 ## Chunk
