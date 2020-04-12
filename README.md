@@ -33,7 +33,7 @@ fmt(2bit) | cs id (6bit)
 - fmt  
 fmt也称为head type，决定了`Chunk Message Header`的长度。  
 - cs id
-`Chunk Basic Header`的长度可能为1、2、3个byte，取决于`cs id`，这里的`cs id`是`chunk stream id`的简写。协议最大支持65597个`cs id `从3-65599。`cs id` 0、1、2为协议保留，0代表ID是64~319（第二个byte + 64）；1代表chunk stream ID为6-65599（（第三个byte）* 256 + 第二个byte + 64）（小端表示）；2代表该消息为低层的协议（在RTMP协议中控制信令的chunk stream ID都是2）.3-63的chunk stream ID就是该byte的值。
+`Chunk Basic Header`的长度可能为1、2、3个byte，取决于`cs id`，这里的`cs id`是`chunk stream id`的简写。协议最大支持65597个`cs id `从3-65599. `cs id` 0、1、2为协议保留，0代表ID是64~319(第二个byte + 64). 1代表chunk stream ID为6-65599（（第三个byte）* 256 + 第二个byte + 64）(小端表示). 2代表该消息为低层的协议（在RTMP协议中控制信令的chunk stream ID都是2). 3-63的chunk stream ID就是该byte的值。
 
 cs id为0时：
 ![报文格式](./image/rtmp-csid0.png)
