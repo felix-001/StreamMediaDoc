@@ -3,4 +3,4 @@
 
 ## 消息
 ### 报文格式
-[报文格式](./image/rtmp-message.jpg)
+![报文格式](./image/rtmp-message.jpg)
