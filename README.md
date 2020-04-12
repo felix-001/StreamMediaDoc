@@ -24,7 +24,7 @@
 ### 报文格式
 ![报文格式](./image/rtmp-chunk.jpeg)
 
-- Chunk Basic Header
+- Chunk Basic Header  
 格式
-|--|--|
+|---|---|
 | fmt | cs id| 
