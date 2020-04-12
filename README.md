@@ -16,6 +16,8 @@
 时间戳
 #### Stream ID
 流ID
+#### Message Body
+音视频裸流(h264/aac/g711)
 
 ## Chunk
 ### 报文格式
