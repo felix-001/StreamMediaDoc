@@ -4,7 +4,7 @@
 ## Message
 ### 报文格式
 ![报文格式](./image/rtmp-message.jpeg)
-消息的报文格式同FLV文件的tag相同
+> 消息的报文格式同FLV文件的tag相同
 #### Message Type ID
 不同种类的消息包含不同的Message Type ID，代表不同的功能。RTMP协议中一共规定了十多种消息类型，分别发挥着不同的作用。
 - Message Type ID在1-7的消息用于协议控制，这些消息一般是RTMP协议自身管理要使用的消息，用户一般情况下无需操作其中的数据。
