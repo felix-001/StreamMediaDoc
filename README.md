@@ -47,8 +47,20 @@ cs id为非0或1时：
 #### Chunk Message Header
 > Chunk Message Header的长度是变长的，取决于`Chunk Type`(fmt)的值。共有四种不同的格式。其中第一种格式可以表示其他三种表示的所有数据，但由于其他三种格式是基于对之前chunk的差量化的表示(类似于h264的I帧P帧)，因此可以更简洁地表示相同的数据，实际使用的时候还是应该采用尽量少的字节表示相同意义的数据。
 
-  - Chunk Type(fmt)=0时
-
+  - Chunk Type(fmt)=0时,长度为3bytes  
+  ![fmt=0](./image/rtmp-chunktype0.png)
+  type=0时Message Header占用11个字节，其他三种能表示的数据它都能表示，当在chunk stream 的开始第一个chunk和头信息中的时间戳后退（即值与上一个chunk相比减小，通常在回退播放的时候会出现这种情况）的时候必须采用这种格式。
+    - timestamp（时间戳）：占用3个字节，因此它最多能表示到16777215=0xFFFFFF=2^24-1，当它
+的值超过这个最大值时，这三个字节都置为1，这样实际的timestamp会转存到 Extended
+Timestamp 字段中，接收端在判断timestamp字段24个位都为1时就会去Extended Timestamp
+中解析实际的时间戳。
+    - message length（消息数据长度）：占用3个字节，表示实际发送的消息的数据如音频帧、视频
+帧等数据的长度，单位是字节。注意这里是Message的长度，也就是chunk属于的Message的总长
+度，而不是chunk本身data的长度。
+    - message type id(消息的类型id)：1个字节，表示实际发送的数据的类型，如8代表音频数据，
+9代表视频数据。
+    - message stream id(消息的流id)：4个字节，表示该chunk所在的流的ID，和Basic Header
+的CSID一样，它采用小端存储方式。
 
 # RTMP流媒体播放过程
 RTMP协议规定，播放一个流媒体有两个前提步骤：第一步，建立一个网络连接（NetConnection）；第二步，建立一个网络流（NetStream）。其中，网络连接代表服务器端应用程序和客户端之间基础的连通关系。网络流代表了发送多媒体数据的通道。服务器和客户端之间只能建立一个网络连接，但是基于该连接可以创建很多网络流。
