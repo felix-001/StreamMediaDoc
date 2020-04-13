@@ -123,7 +123,7 @@ RTMP 握手分为简单握手和复杂握手，一般使用简单握手较多，
 
 # 参考链接
 - RTMP官方协议
-http://www.images.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/rtmp/pdf/rtmp_specification_1.0.pdf
+http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/rtmp/pdf/rtmp_specification_1.0.pdf
 
 - 开源项目 RTMP Dump  
 http://rtmpdump.mplayerhq.hu/
