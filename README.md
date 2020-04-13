@@ -143,6 +143,9 @@ RTMP 握手分为简单握手和复杂握手，一般使用简单握手较多，
 - 播放命令成功的话，服务器发送命令消息中的“响应状态” NetStream.Play.Start & NetStream.Play.reset，告知客户端“播放”命令执行成功。
 - 在此之后服务器发送客户端要播放的音频和视频数据。
 
+## 时序图
+![建立连接](./image/rtmp-sequence.png)  
+
 
 # 参考链接
 - RTMP官方协议
