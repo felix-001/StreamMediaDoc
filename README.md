@@ -146,9 +146,9 @@ RTMP 握手分为简单握手和复杂握手，一般使用简单握手较多，
 ## 时序图
 ![建立连接](./image/rtmp-sequence.png)  
 
-# MQTT消息详解
+# RTMP消息详解
 ## 消息分类
-MQTT的消息按照Message Type ID的不同，分为如下几类消息
+RTMPT的消息按照Message Type ID的不同，分为如下几类消息
 
 Message Type ID | 消息类型说明
 ---|---
