@@ -54,5 +54,5 @@ RTMP协议规定，播放一个流媒体有两个前提步骤：第一步，建�
 - RTMP官方协议
 http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/rtmp/pdf/rtmp_specification_1.0.pdf
 
-- 开源项目 RTMP Dump
+- 开源项目 RTMP Dump  
 http://rtmpdump.mplayerhq.hu/
