@@ -131,20 +131,15 @@ RTMP 握手分为简单握手和复杂握手，一般使用简单握手较多，
 - 服务器发送用户控制消息中的“流开始”(Stream Begin)消息到客户端。
 - 服务器发送命令消息中的“结果”(_result)，通知客户端连接的状态。   
 
-## 建立流(NetStream)
-![建立连接](./image/rtmp-createstream.webp)  
-
-- 客户端发送命令消息中 releaseStream 命令到服务器端
-- 客户端发送命令消息中 FCPublish 命令到服务器端
+## 建立流(NetStream) & 播放(Play)
+![建立连接](./image/rtmp-createstream-play.png)  
 - 客户端发送命令消息中的“创建流”（createStream）命令到服务器端。
 - 服务器端接收到“创建流”命令后，发送命令消息中的“结果”(_result)，通知客户端流的状态。
-- 解析服务器返回的消息会得到一个stream ID, 这个ID也就是以后和服务器通信的 message stream ID, 一般返回的是1，不固定。
-
-## 播放(Play)
-![建立连接](./image/rtmp-play.webp) 
-推流准备工作的最后一步是 Publish Stream，即向服务器发一个publish命令，这个命令的message stream ID 就是上面 create stream 之后服务器返回的stream ID，发完这个命令一般不用等待服务器返回的回应，直接下一步发送音视频数据。
-有些rtmp库还会发setMetaData消息，这个消息可以发也可以不发，里面包含了一些音视频编码的信息。
-
+- 客户端发送命令消息中的“播放”（play）命令到服务器。
+- 接收到播放命令后，服务器发送设置块大小（ChunkSize）协议消息。
+- 服务器发送用户控制消息中的“streambegin”，告知客户端流ID。
+- 播放命令成功的话，服务器发送命令消息中的“响应状态” NetStream.Play.Start & NetStream.Play.reset，告知客户端“播放”命令执行成功。
+- 在此之后服务器发送客户端要播放的音频和视频数据。
 
 
 # 参考链接
