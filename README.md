@@ -44,4 +44,15 @@ cs id为1时：
 cs id为非0或1时：
 ![报文格式](./image/rtmp-csid-other.png)
 
+#### Chunk Message Header
 
+# RTMP流媒体播放过程
+RTMP协议规定，播放一个流媒体有两个前提步骤：第一步，建立一个网络连接（NetConnection）；第二步，建立一个网络流（NetStream）。其中，网络连接代表服务器端应用程序和客户端之间基础的连通关系。网络流代表了发送多媒体数据的通道。服务器和客户端之间只能建立一个网络连接，但是基于该连接可以创建很多网络流。
+播放一个RTMP协议的流媒体需要经过以下几个步骤：握手，建立连接，建立流，播放。RTMP连接都是以握手作为开始的。建立连接阶段用于建立客户端与服务器之间的“网络连接”；建立流阶段用于建立客户端与服务器之间的“网络流”；播放阶段用于传输视音频数据。
+
+
+- RTMP官方协议
+http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/rtmp/pdf/rtmp_specification_1.0.pdf
+
+- 开源项目 RTMP Dump
+http://rtmpdump.mplayerhq.hu/
