@@ -132,7 +132,7 @@ RTMP 握手分为简单握手和复杂握手，一般使用简单握手较多，
 - 服务器发送命令消息中的“结果”(_result)，通知客户端连接的状态。   
 
 ## 建立流(NetStream)
-![建立连接](./image/rtmp-createstream.png)  
+![建立连接](./image/rtmp-createstream.webp)  
 
 - 客户端发送命令消息中 releaseStream 命令到服务器端
 - 客户端发送命令消息中 FCPublish 命令到服务器端
@@ -141,7 +141,7 @@ RTMP 握手分为简单握手和复杂握手，一般使用简单握手较多，
 - 解析服务器返回的消息会得到一个stream ID, 这个ID也就是以后和服务器通信的 message stream ID, 一般返回的是1，不固定。
 
 ## 播放(Play)
-![建立连接](./image/rtmp-play.png) 
+![建立连接](./image/rtmp-play.webp) 
 推流准备工作的最后一步是 Publish Stream，即向服务器发一个publish命令，这个命令的message stream ID 就是上面 create stream 之后服务器返回的stream ID，发完这个命令一般不用等待服务器返回的回应，直接下一步发送音视频数据。
 有些rtmp库还会发setMetaData消息，这个消息可以发也可以不发，里面包含了一些音视频编码的信息。
 
