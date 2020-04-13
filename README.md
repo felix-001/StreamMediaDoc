@@ -91,6 +91,7 @@ RTMP协议规定，播放一个流媒体有两个前提步骤：第一步，建�
 
 RTMP连接都是以握手作为开始的。建立连接阶段用于建立客户端与服务器之间的“网络连接”；建立流阶段用于建立客户端与服务器之间的“网络流”；播放阶段用于传输视音频数据。
 
+# 参考链接
 - RTMP官方协议
 http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/rtmp/pdf/rtmp_specification_1.0.pdf
 
