@@ -48,7 +48,7 @@ cs id为非0或1时：
 > Chunk Message Header的长度是变长的，取决于`Chunk Type`(fmt)的值。共有四种不同的格式。其中第一种格式可以表示其他三种表示的所有数据，但由于其他三种格式是基于对之前chunk的差量化的表示(类似于h264的I帧P帧)，因此可以更简洁地表示相同的数据，实际使用的时候还是应该采用尽量少的字节表示相同意义的数据。
 
   - Chunk Type(fmt)=0时,长度为3bytes  
-  ![fmt=0](./image/rtmp-chunktype0.png)
+  ![fmt=0](./image/rtmp-chunktype0.png)  
   type=0时Message Header占用11个字节，其他三种能表示的数据它都能表示，当在chunk stream 的开始第一个chunk和头信息中的时间戳后退（即值与上一个chunk相比减小，通常在回退播放的时候会出现这种情况）的时候必须采用这种格式。
     - timestamp（时间戳）：占用3个字节，因此它最多能表示到16777215=0xFFFFFF=2^24-1，当它
 的值超过这个最大值时，这三个字节都置为1，这样实际的timestamp会转存到 Extended
