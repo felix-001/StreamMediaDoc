@@ -98,6 +98,20 @@ RTMP 握手分为简单握手和复杂握手，现在Adobe公司使用RTMP协议
 S2 消息，然后发送其他数据。
 - 服务端必须接收到 C0 或者 C1 消息，然后发送 S0 和 S1 消息。服务端必须接收到 C2 消息，然后发送其他数据。
 
+### C0 和 S0 格式
+![握手](./image/rtmp-c0s0.png)
+- version（1 byte）：RTMP 的版本，一般为 3。
+
+### C1 和 S1 格式
+![握手](./image/rtmp-c1s1.png)
+- random-data: (offset) bytes
+- key-data: 128 bytes
+- random-data: (764 - offset - 128 - 4) bytes
+- offset: 4 bytes
+
+###  C2 和 S2 格式
+![握手](./image/rtmp-c2s2.png)
+
 # 参考链接
 - RTMP官方协议
 http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/rtmp/pdf/rtmp_specification_1.0.pdf
