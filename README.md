@@ -156,7 +156,7 @@ Message Type ID | 消息类型说明
 8 | Audio Message
 9 | Video Message
 17/20 | 命令消息
-15/28 | 数据消息
+15/18 | 数据消息
 16/19 | Shared Object Message
 22 | Aggregate Message
 
