@@ -205,6 +205,66 @@ Data Message（数据消息，Message Type ID = 15 或 18）：传递一些元�
 ### Shared Object Message
 Shared Object Message（共享消息，Message Type ID = 16 或 19）：表示一个 Flash 类型的对象，由键值对的集合组成，用于多客户端，多实例时使用。AMF0 时 Message Type ID 为 19，AMF3 为 16。每个消息可以包含多个事件。
 
+# AMF
+> Flash 5开始就可以以XML或者“变量/值”配对输出格式向服务器传送数据。虽然这些数据能通过Flash编译器自动解析或者通过开发人员自行编写的代码手动解析, 但解析的速度慢。因为在解析过程中，XML需要按节点逐层处理数据。而且使用XML和“变量/值”配对格式处理的数据类型只能是字符型，数字也不例外。而Flash Remoting却能处理复杂数据类型, 比如对象、结构、数组，甚至可以是数据集，配合DataGrid组件可以很方便地显示数据。为了处理复杂数据类型，采用一种独有的方式使Flash与应用服务器间可以来回传送数据势在必行。于是AMF应运而生。AMF是Adobe独家开发出来的通信协议，它采用二进制压缩，序列化、反序列化、传输数据，从而为Flash 播放器与Flash Remoting网关通信提供了一种轻量级的、高效能的通信方式。MF最大的特色在于可直接将Flash内置对象，例如Object, Array, Date, XML，传回服务器端，并且在服务器端自动进行解析成适当的对象，这就减轻了开发人员繁复工作，同时也更省了开发时间。由于AMF采用二进制编码，这种方式可以高度压缩数据，因此非常适合用来传递大量的资料。数据量越大，Flash Remoting的传输效能就越高，远远超过Web Service。至于XML, LoadVars和loadVariables() ，它们使用纯文本的传输方式，效能就更不能与Flash Remoting相提并论了
+AMF是一个二进制格式，用来序列化对象图（object graph），例如 ActionScript对象、XML，或者用来在AdobeFlash客户端和远程服务之间传递消息。这个格式制定了多种数据类型用来编码数据。
+
+## 格式
+data type (1byte) | data size(可选) | data value
+---|---|---
+
+## 数据类型详细说明
+类型 | 值 | 说明
+---|---|---
+Number | 0x00 |Encoded as IEEE 64-bit double-precision floating point number<br>占用8个字节
+Boolean | 0x01 |(Encoded as a single byte of value 0x00 or 0x01)
+String | 0x02 |(16-bit integer string length with UTF-8 string)<br>string就是字符类型，一个byte的amf类型，两个bytes的字符长度，和N个bytes的数据。<br>比如：02 00 02 33 22，第一个byte为amf类型，其后两个bytes为长度，注意这里的00 02是大端模式，33 22是字符数据。
+Object | 0x03 | (Set of key/value pairs)
+Null | 0x05 |
+ECMA Array | 0x08 | (32-bit entry count)<br>实际上和object差不多，只是在0x08类型后面多了4个bytes的记录总共多少items的东西，也是以00 00 09结束。
+Object End | 0x09 | (preceded by an empty 16-bit string length)<br>第一个byte是03表示object，其后跟的是N个（key+value）。<br>最后以00 00 09表示object结束。<br>key是一个字符串组成：2bytes的长度，N bytes的数据，就是表示value的作用，相当于value的名字。<br>value可以使amf任意一种类型，包括object。<br>格式和单独的amf type一样，如果是object的话，相当于在里面再嵌套一个object。
+Strict Array | 0x0a |(32-bit entry count)
+Date | 0x0b |(Encoded as IEEE 64-bit double-precision floating point number with 16-bit integer timezone offset)
+Long String | 0x0c |(32-bit integer string length with UTF-8 string)
+XML Document | 0x0f |(32-bit integer string length with UTF-8 string)
+Typed Object | 0x10 | (16-bit integer name length with UTF-8 name, followed by entries)
+Switch to AMF3 |  0x11 | 切换AMF3类型
+
+## 抓包示例
+这里以`connect`命令为例子对封包进行分析
+
+### 包格式
+![包格式](./image/rtmp-connect-pkt.png)
+
+### 命令对象里包含的键值对
+![包格式](./image/rtmp-connect-object.png)
+
+### 音频编码属性的可选值
+![包格式](./image/rtmp-audio-codec.png)
+
+### 视频编码属性的可选值
+![包格式](./image/rtmp-video-codec.png)
+
+### 视频函数属性的可选值
+![包格式](./image/rtmp-video-attr.png)
+
+### 对象编码属性的可选值
+![包格式](./image/rtmp-obj-attr.png)
+
+## 抓包分析
+![包格式](./image/rtmp-cap.png)
+- 首先chunk heade的type id为0x14,代表命令消息，格式为AMF0
+- 第一个字节为0x02, 代表为AMF的`String`类型
+- 接下来两个字节`0x00 0x07`，代表接下来字符串的长度为7个字节
+- 接下来7个字节是'connect'字符串
+- 字符串后面的`0x00`代表是`Number`类型，占用8个字节，这个是`IEEE-754 double`编码的，代表数字1
+- `0x03`代表AMF的`Object`类型
+- 接下来是第一个键值对的键的长度`0x00 0x03`,长度为3个字节，AMF规定`Object`的键为`String`,所以前面不需要类型标识
+- 接下来第一个键值对的键,字符串为'app',长度为3个字节
+- 接下来是app的值，首先第一个字节是`0x02`，代表是一个`String`类型
+- `0x00 0x03`代表`String`的长度为3个字节
+- 紧接着三个字节为app的值，即'vod'
+
 # 注意事项
 - RTMP中video message中H264的编码方式是AVCC，而大多数摄像头编码的H264格式是annex-b，需要做转换
 - RTMP第一个重要的Message就是视音频的编码信息，如果没有这个信息，播放端是无法播放的。这个在RTMP中称为：AVCDecoderConfigurationRecord。需要从码流的关键帧中，解析出相应的信息，并填充。
@@ -221,3 +281,9 @@ https://github.com/felix-001/ipcam_sdk
 
 - 七牛的fastrtmp推流sdk   
 https://github.com/felix-001/linking-device-sdk/tree/master/libfastrtmp
+
+- AMF0协议  
+https://github.com/wlanjie/AndroidFFmpeg/blob/master/doc/amf0_spec_121207.pdf
+
+- AMF3协议  
+https://github.com/wlanjie/AndroidFFmpeg/blob/master/doc/amf3_spec_121207.pdf
