@@ -33,7 +33,7 @@ fmt(2bit) | cs id (6bit)
 - fmt  
 fmt也称为head type，决定了`Chunk Message Header`的长度。  
 - cs id
-`Chunk Basic Header`的长度是变长的，可能为1、2、3个byte，取决于`cs id`，这里的`cs id`是`chunk stream id`的简写。每次在发送一个不同类型的RTMP消息时都要有不用的chunk stream ID, 如上一个Message 是command类型的，之后要发送视频类型的消息，视频消息的chunk stream ID 要保证和上面 command类型的消息不同。协议最大支持65597个`cs id `从3-65599. `cs id` 0、1、2为协议保留，0代表ID是64~319(第二个byte + 64). 1代表chunk stream ID为6-65599（（第三个byte）* 256 + 第二个byte + 64）(小端表示). 2代表该消息为低层的协议（在RTMP协议中控制信令的chunk stream ID都是2). 3-63的chunk stream ID就是该byte的值。
+`Chunk Basic Header`的长度是变长的，可能为1、2、3个byte，取决于`cs id`，这里的`cs id`是`chunk stream id`的简写。每次在发送一个不同类型的RTMP消息时都要有不用的chunk stream ID, 如上一个Message 是command类型的，之后要发送视频类型的消息，视频消息的chunk stream ID 要保证和上面 command类型的消息不同。协议最大支持65597个`cs id `从3-65599. `cs id` 0、1、2为协议保留，0代表ID是64~319(第二个byte + 64). 1代表chunk stream ID为64-65599（（第三个byte）* 256 + 第二个byte + 64）(小端表示). 2代表该消息为低层的协议（在RTMP协议中控制信令的chunk stream ID都是2). 3-63的chunk stream ID就是该byte的值。
 
 cs id为0时：
 ![报文格式](./image/rtmp-csid0.png)
@@ -94,7 +94,7 @@ RTMP协议规定，播放一个流媒体有两个前提步骤：第一步，建�
 RTMP连接都是以握手作为开始的。建立连接阶段用于建立客户端与服务器之间的“网络连接”；建立流阶段用于建立客户端与服务器之间的“网络流”；播放阶段用于传输视音频数据。
 
 ## 握手
-RTMP 握手分为简单握手和复杂握手，一般使用简单握手较多，复杂握手不做介绍。要建立一个有效的RTMP Connection链接，首先要“握手”:客户端要向服务器发送C0,C1,C2（按序）三个chunk，服务器向客户端发送S0,S1,S2（按序）三个chunk，然后才能进行有效的信息传输。RTMP协议本身并没有规定这6个Message的具体传输顺序
+RTMP 握手分为简单握手和复杂握手，一般使用简单握手较多，复杂握手不做介绍。要建立一个有效的RTMP Connection链接，首先要“握手”:客户端要向服务器发送C0,C1,C2（按序）三个chunk，服务器向客户端发送S0,S1,S2（按序）三个chunk，然后才能进行有效的信息传输。RTMP协议本身并没有规定这6个Message的具体传输顺序。RTMP首开时间慢主要是因为握手这里。
 ![握手](./image/rtmp-handshake.png)
 - 客户端开始发送C0,C1；
 - 客户端必须收到S1后，才发送C2;
@@ -146,10 +146,78 @@ RTMP 握手分为简单握手和复杂握手，一般使用简单握手较多，
 ## 时序图
 ![建立连接](./image/rtmp-sequence.png)  
 
+# RTMP消息详解
+## 消息分类
+RTMPT的消息按照Message Type ID的不同，分为如下几类消息
+
+Message Type ID | 消息类型说明
+---|---
+1-6 | 协议控制消息
+8 | Audio Message
+9 | Video Message
+17/20 | 命令消息
+15/18 | 数据消息
+16/19 | Shared Object Message
+22 | Aggregate Message
+
+### 协议控制消息
+这些协议控制消息必须使用 0 作为消息流ID（作为已知的控制流ID），同时使用 2 作为 `chunk stream ID`。协议控制消息接收立即生效；
+解析时，时间戳字段被忽略。
+包含以下消息：
+- Set Chunk Size
+- Abort Message  
+  协议控制消息（2），中断消息，用来通知通信的对方，如果正在等待一条消息的部分块（已经接收了一部分），那么可以丢弃之前已经接收到的块。通信的一方将接收到块流ID作为当前协议消息的有效数据。应用程序可以发送此消息来通知对方，当前正在传输的消息没有必要再处理了。  
+- Acknowledgement
+- User Control Message
+- Window Acknowledgement Size
+- Set Peer Bandwidth
+
+### 命令消息
+Command Message（命令消息，Message Type ID = 17 或 20）：表示在客户端和服务器间传递的在对端执行某些操作的命令消息，connect 表示连接对端，对端如果同意连接的话就会记录发送端信息并返回连接成功消息，publish 表示开始向对方推流，接收端接收到命令后准备好接收对端发送的流信息。当信息使用 AMF0 编码时，Message Type ID = 20，AMF3 编码时为7。
+服务器和客户端之间使用 AMF 编码的命令消息交互。 一些命令消息被用来发送操作指令，比如 connect，createStream，
+public，play，pause。另外一些命令消息被用来通知发送方请求命令的状态，比如 onstatus，result 等。
+命令消息分为两种：
+- 网络连接命令
+包含：
+    - connect  
+    客户端发起connect命令的包里面，含有客户端支持的音视频编解码信息。
+    - call
+    - createStream  
+    客户端通过发送此消息给服务器来创建一个用于消息交互的逻辑通道。音频，视频，和元数据都是通过 createStream 命令创建的流通道发布出去的
+    - close
+- 网络流命令
+网络流定义了通过网络连接把音频，视频和数据消息流在客户端和服务器之间进行交换的通道。一个网络连接对象可以有多个
+网络流，进而支持多个数据流。
+客户端可以通过网络流发送到服务器的命令如下：
+    - 播放play
+    - 播放2 play2
+    - 删除流 deleteStream
+    - 关闭流 closeStream
+    - 接收音频 receiveAudio
+    - 接收视频 receiveVideo
+    - 发布 publish
+    - 定位 seek
+    - 暂停 pause
+    
+### 数据消息
+Data Message（数据消息，Message Type ID = 15 或 18）：传递一些元数据（Metadata，比如视频名，分辨率等等）或者用户自定义的一些消息。当信息使用 AMF0 编码时，Message Type ID = 18，AMF3 则为15.元数据包含了（音视频）数据的细节信息，像流的创建时间，时间点，主题等等.
+
+### Shared Object Message
+Shared Object Message（共享消息，Message Type ID = 16 或 19）：表示一个 Flash 类型的对象，由键值对的集合组成，用于多客户端，多实例时使用。AMF0 时 Message Type ID 为 19，AMF3 为 16。每个消息可以包含多个事件。
+
+# 注意事项
+- RTMP中video message中H264的编码方式是AVCC，而大多数摄像头编码的H264格式是annex-b，需要做转换
+- RTMP第一个重要的Message就是视音频的编码信息，如果没有这个信息，播放端是无法播放的。这个在RTMP中称为：AVCDecoderConfigurationRecord。需要从码流的关键帧中，解析出相应的信息，并填充。
 
 # 参考链接
 - RTMP官方协议
 http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/rtmp/pdf/rtmp_specification_1.0.pdf
 
-- 开源项目 RTMP Dump  
+- 开源项目 RTMP Dump    
 http://rtmpdump.mplayerhq.hu/
+
+- 七牛的设备端RTMP推流sdk   
+https://github.com/felix-001/ipcam_sdk
+
+- 七牛的fastrtmp推流sdk   
+https://github.com/felix-001/linking-device-sdk/tree/master/libfastrtmp
