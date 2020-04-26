@@ -287,3 +287,7 @@ https://github.com/wlanjie/AndroidFFmpeg/blob/master/doc/amf0_spec_121207.pdf
 
 - AMF3协议  
 https://github.com/wlanjie/AndroidFFmpeg/blob/master/doc/amf3_spec_121207.pdf
+
+## rtmp协议支持H265
+https://github.com/ksvc/FFmpeg/wiki
+
