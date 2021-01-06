@@ -35,11 +35,16 @@ DTLS的主要用途，就是让通信双方协商密钥，用来对数据进行�
 - 接收方：对加密数据进行解密；
 ### srtp
 SRTP、SRTCP，分别在RTP、RTCP的基础上加了个S(Secure)，表示安全的意思
+
 #### 音视频数据的发送过程：
 - 通信双方：通过DTLS握手，协商生成一对密钥；
 - 数据发送方：将音视频数据封装成RTP包，将控制数据封装成RTCP包；
 - 数据发送方：利用加密密钥，对RTP包、RTCP包进行加密，生成SRTP包、SRTCP包；
 - 数据发送方：通过UDP传输SRTP包、SRTCP包；
+
+### SCTP
+tream Control Transmission Protocol）：流控制传输协议。
+RTP/RTCP主要用来传输音视频，是为了流媒体设计的。而对于自定义应用数据的传输，WebRTC中使用了SCTP协议。
 
 # 流程
 ![流程](./image/rtcFlow.png)
