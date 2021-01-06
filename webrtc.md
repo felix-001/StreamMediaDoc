@@ -33,8 +33,9 @@ webrtc规定了需要交换`sdp`，具体怎么交换，以及交换的方式，
 - 发起端创建 PeerConnection，生成Offer 信令（SDP），通过 信令服务器 转发给另一端。
   SDP：描述建立音视频连接的一些属性，如音频的编码格式、视频的编码格式、是否接收/发送音视频等等。
 - 响应端收到Offer 信令之后，生成Answer 信令（SDP）, 返回给发起端。
-- 交换完SDP之后，相互发送自己的Candidate信息。
-- Candidate：主要包含了相关方的IP信息，包括自身局域网的ip、公网ip、turn服务器ip、stun服务器ip等。
+- WebRTC客户端先去连接ICE Server，也就是STUN Server或者TURN Server。
+- 客户端连接STUN Server是为了测试出自己的NAT类型和获取到自己公网ip地址
+- 交换完SDP之后，相互发送自己的Candidate信息。  Candidate：主要包含了相关方的IP信息，包括自身局域网的ip、公网ip、turn服务器ip、stun服务器ip等。
 - 有了ip信息之后， 开始尝试进行 P2P打洞（打洞过程是框架实现的，如想知道打洞原理，可自行百度）。若打洞不成功，则会改用服务器转发。
 - 无论是打洞还是转发，只要有一条路是成功的，那PeerConnection就算是成功建立了。接下来就可以进行音视频通话了。
 
