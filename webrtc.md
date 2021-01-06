@@ -67,6 +67,8 @@ RTP/RTCP主要用来传输音视频，是为了流媒体设计的。而对于自
 - onicecandidate事件用来寻找合适的ICE
 - createOffer()是RTCPeerConnection对象自带的方法，用来创建offer，创建成功后调用setLocalDescription方法将localDescription设置为offer，localDescription即为我们需要发送给应答方的sdp
 - sendOffer和sendCandidate方法是自定义方法，用来将数据发送给服务器
+# 调试工具
+chrome://webrtc-internals 
 
 # srs前期webrtc demo的web代码
 ```
@@ -169,3 +171,5 @@ request.onload = function () {
 - [srs摄像头推流webrtc播放演示](https://www.cnblogs.com/dong1/p/12712229.html)
 - [srs普通推流webrtcp播放](https://segmentfault.com/a/1190000024533847)
 - [webrtc cdn实现](https://zhuanlan.zhihu.com/p/143974932?utm_source=wechat_session&utm_medium=social&s_r=0)
+- [SCTP](https://tools.ietf.org/html/rfc4960)
+- [DTLS](https://tools.ietf.org/html/rfc4347)
