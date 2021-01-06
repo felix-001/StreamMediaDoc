@@ -33,6 +33,7 @@ webrtc规定了需要交换`sdp`，具体怎么交换，以及交换的方式，
 - 发起端创建 PeerConnection，生成Offer 信令（SDP），通过 信令服务器 转发给另一端。
   SDP：描述建立音视频连接的一些属性，如音频的编码格式、视频的编码格式、是否接收/发送音视频等等。
 - 响应端收到Offer 信令之后，生成Answer 信令（SDP）, 返回给发起端。
+- 收到offer以后调用RTCPeerConnection.setRemoteDescription加入remote sdp
 - WebRTC客户端先去连接ICE Server，也就是STUN Server或者TURN Server。
 - 客户端连接STUN Server是为了测试出自己的NAT类型和获取到自己公网ip地址
 - TURN Server包含了STUN Server的功能而且包含Relay中转功能。
