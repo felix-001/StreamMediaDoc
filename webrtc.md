@@ -1,2 +1,2 @@
 # 流程
-![流程](./image/rtcFlowd.png)
+![流程](./image/rtcFlow.png)
