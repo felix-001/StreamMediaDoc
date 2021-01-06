@@ -75,6 +75,24 @@ RTP/RTCP主要用来传输音视频，是为了流媒体设计的。而对于自
 # 调试工具
 chrome://webrtc-internals 
 
+# 弱网对抗技术
+
+## 第一类：关键帧请求
+主要包括SLI／PLI／FIR，作用是在关键帧丢失无法解码时，请求发送方重新生成并发送一个关键帧。这本质是一种重传，但是跟传输层的重传的区别是，它重传是最新生成的帧。
+
+## 第二类：重传请求
+主要包括RTX／NACK／RPSI
+这个重传跟关键帧请求的区别是它可以要求任意帧进行重传
+
+## 第三类：码率控制
+主要包括REMB／TMMBR／TMMBN
+TMMBR是Temporal Max Media Bitrate Request，表示临时最大码率请求。表明接收端当前带宽受限，告诉发送端控制码率。REMB是ReceiverEstimated Max Bitrate，接收端估计的最大码率。TMMBN是Temporal Max Media Bitrate Notification
+
+## 第四类：冗余包
+音视频FEC（Forward Error Correction，前向纠错）前向纠错技术来进行丢包恢复，由发送方进行FEC编码引入冗余包，接收方进行FEC解码并恢复丢失的数据包。
+
+WebRTC中音频前向纠错与视频前向纠错的方式不同，音频前向纠错遵循RFC2198标准，视频前向纠错遵循RFC5109标准。两者有差异的原因是音频传输所占据的带宽比较小，即使增加1倍的带宽冗余，也不会造成太大的影响，而视频的一帧比较大，通常需要几个RTP数据包才能完全发送，因此不能像音频一样具有较大的冗余力度。
+
 # srs前期webrtc demo的web代码
 ```
 <!DOCTYPE html>
