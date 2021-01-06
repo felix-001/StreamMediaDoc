@@ -149,3 +149,6 @@ request.onload = function () {
 - [webrtc api](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API)
 - [srs rtc pr](https://github.com/ossrs/srs/pull/1638)
 - [srs rtc issue](https://github.com/ossrs/srs/issues/307)
+- [srs摄像头推流webrtc播放演示](https://www.cnblogs.com/dong1/p/12712229.html)
+- [srs普通推流webrtcp播放](https://segmentfault.com/a/1190000024533847)
+- [webrtc cdn实现](https://zhuanlan.zhihu.com/p/143974932?utm_source=wechat_session&utm_medium=social&s_r=0)
