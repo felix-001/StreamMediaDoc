@@ -54,3 +54,4 @@ webrtc规定了需要交换`sdp`，具体怎么交换，以及交换的方式，
 # 链接
 - [webrtc api](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API)
 - [srs rtc pr](https://github.com/ossrs/srs/pull/1638)
+- [srs rtc issue](https://github.com/ossrs/srs/issues/307)
