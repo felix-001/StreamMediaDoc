@@ -6,7 +6,7 @@ WebRTC (Web Real-Time Communications) 是一项实时通讯技术，它允许网
 
 # 组成
 ## 信令
-webrtc规定了需要交换`sdp`，具体怎么交换，以及交换的方式，没有规定
+webrtc规定了需要交换`sdp`，具体怎么交换，以及交换的方式，没有规定。只是定义了框架和接口，具体实现不限制。
 - 信令服务器
 - 传输协议
   - websocket
