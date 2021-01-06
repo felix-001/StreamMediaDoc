@@ -37,3 +37,6 @@ webrtc规定了需要交换`sdp`，具体怎么交换，以及交换的方式，
 - Candidate：主要包含了相关方的IP信息，包括自身局域网的ip、公网ip、turn服务器ip、stun服务器ip等。
 - 有了ip信息之后， 开始尝试进行 P2P打洞（打洞过程是框架实现的，如想知道打洞原理，可自行百度）。若打洞不成功，则会改用服务器转发。
 - 无论是打洞还是转发，只要有一条路是成功的，那PeerConnection就算是成功建立了。接下来就可以进行音视频通话了。
+
+# 链接
+- [webrtc api](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API)
