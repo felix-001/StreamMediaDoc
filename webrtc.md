@@ -21,7 +21,7 @@ webrtc规定了需要交换`sdp`，具体怎么交换，以及交换的方式，
     - 公网ip
     - NAT类型
       
-  - 交换sdp
+  - 交换sdp、candidate
   - 建立p2p通道
   
 ## 流媒体
