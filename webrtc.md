@@ -11,6 +11,7 @@ webrtc规定了需要交换`sdp`，具体怎么交换，以及交换的方式，
       - 需要的服务
         - STUN
         - TURN
+        - ICE
     - 公网ip
     - NAT类型
       
