@@ -44,5 +44,12 @@ webrtc规定了需要交换`sdp`，具体怎么交换，以及交换的方式，
 - 有了ip信息之后， 开始尝试进行 P2P打洞（打洞过程是框架实现的，如想知道打洞原理，可自行百度）。若打洞不成功，则会改用服务器转发。
 - 无论是打洞还是转发，只要有一条路是成功的，那PeerConnection就算是成功建立了。接下来就可以进行音视频通话了。
 
+# 实现流程
+- addStream方法将getUserMedia方法中获取的流(stream)添加到RTCPeerConnection对象中，以进行传输
+- onaddStream事件用来监听通道中新加入的流，通过e.stream获取
+- onicecandidate事件用来寻找合适的ICE
+- createOffer()是RTCPeerConnection对象自带的方法，用来创建offer，创建成功后调用setLocalDescription方法将localDescription设置为offer，localDescription即为我们需要发送给应答方的sdp
+- sendOffer和sendCandidate方法是自定义方法，用来将数据发送给服务器
+
 # 链接
 - [webrtc api](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API)
