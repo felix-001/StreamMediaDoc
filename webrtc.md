@@ -77,7 +77,7 @@ ice-lite 有以下几个特点：
 常规的 SFU 都会自身集成一个 ice lite 实现的 ice server，所以交互过程中省去了 ice server 的独立角色。SFU 的 SDP 信息中会携带自身的 Host Candidate 和 'a=ice-lite' 属性，当对端收到 'a=ice-lite'  属性后会自动将自己设置成 controlling 角色，主动与 SFU 的 ice agent 进行交互。同时 SFU 也不需要对端的 iceCandidate 信息，因为在对端发起 stun binding 测试连通性的时候就可以获取对端的信息，便可以建议一个 Transport tuple 用来维持 peerConnection 通信。
 
 下图是 SFU 模式下 peerConnectionn 的建立过程：
-![sfu](./image/suf_connect.png)
+![sfu](./image/sfu_connect.png)
 
 # 实现流程
 - addStream方法将getUserMedia方法中获取的流(stream)添加到RTCPeerConnection对象中，以进行传输
