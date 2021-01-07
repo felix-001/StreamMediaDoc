@@ -196,6 +196,6 @@ request.onload = function () {
 - [webrtc cdn实现](https://zhuanlan.zhihu.com/p/143974932?utm_source=wechat_session&utm_medium=social&s_r=0)
 - [SCTP](https://tools.ietf.org/html/rfc4960)
 - [DTLS](https://tools.ietf.org/html/rfc4347)
-- [关于sfu级联](https://my.oschina.net/u/3521704/blog/4592305 这篇文章有讲到级联)
+- [关于sfu级联](https://my.oschina.net/u/3521704/blog/4592305)
 - [srs webrtc回源](https://github.com/ossrs/srs/issues/2091)
       
