@@ -66,6 +66,19 @@ RTP/RTCP主要用来传输音视频，是为了流媒体设计的。而对于自
 - 有了ip信息之后， 开始尝试进行 P2P打洞（打洞过程是框架实现的，如想知道打洞原理，可自行百度）。若打洞不成功，则会改用服务器转发。
 - 无论是打洞还是转发，只要有一条路是成功的，那PeerConnection就算是成功建立了。接下来就可以进行音视频通话了。
 
+##  SFU模式 PeerConnection 建立过程
+SFU 模式下，SFU 服务都会有自己的固定公网IP地址，这个先决条件简化了 WebRTC 中 peerConnection 的建立过程，可以把这种场景理解为 P2P 通信的一端确定在 NAT 前面，并且有固定IP地址的特殊情况，这时对于 SFU 服务没有必要再去收集自己的 iceCandidate，所以 ICE 协议(RFC5245) 中定义了一种 lite 实现方式，简化了有固定IP公网地址一端的 ice 实现方式，只要满足固定公网IP的前提条件，通过 lite 方式实现一个 ice server，完全实现 ice 协议的对端将毫无感知的与 lite 实现建立常规的 peerConnection 通信信道。
+
+ice-lite 有以下几个特点：
+
+- ICE 的 Lite 实现不需要实现 Candidate 的收集过程；只需要提供 Host Candidate；
+- 不需要实现连通性检查或者状态机，只需要实现连通性检查的Response；
+- ICE Lite 在交互过程中只能是 controlled 角色，并且不能使用 USE-CANDIDATE 来做 ice nomination；  
+常规的 SFU 都会自身集成一个 ice lite 实现的 ice server，所以交互过程中省去了 ice server 的独立角色。SFU 的 SDP 信息中会携带自身的 Host Candidate 和 'a=ice-lite' 属性，当对端收到 'a=ice-lite'  属性后会自动将自己设置成 controlling 角色，主动与 SFU 的 ice agent 进行交互。同时 SFU 也不需要对端的 iceCandidate 信息，因为在对端发起 stun binding 测试连通性的时候就可以获取对端的信息，便可以建议一个 Transport tuple 用来维持 peerConnection 通信。
+
+下图是 SFU 模式下 peerConnectionn 的建立过程：
+![sfu](./image/suf_connect.png)
+
 # 实现流程
 - addStream方法将getUserMedia方法中获取的流(stream)添加到RTCPeerConnection对象中，以进行传输
 - onaddStream事件用来监听通道中新加入的流，通过e.stream获取
