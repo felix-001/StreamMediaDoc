@@ -1,0 +1,1022 @@
+onvif规范 中文介绍 
+什么是ONVIF ? ONVIF规范描述了网络视频的模型、接口、数据类型以及数据交互的模式。并复用了一些
+现有的标准如WS系列标准等。 
+ONVIF规范的目标是实现一个网络视频框架协议使不同厂商所生产的网络视频产品包
+括摄录前端、录像设备等完全互通。 
+ONVIF规范描述了网络视频的模型、接口、数据类型以及数据交互的模式。并复用了一些
+现有的标准如WS系列标准等。 
+ONVIF规范的目标是实现一个网络视频框架协议使不同厂商所生产的网络视频产品包
+括摄录前端、录像设备等完全互通。 
+ONVIF规范中设备管理和控制部分所定义的接口均以Web Services的形式提供。ONVIF
+规范涵盖了完全的XML及WSDL的定义。每一个支持ONVIF规范的终端设备均须提供与
+功能相应的Web Service。服务端与客户端的数据交互采用SOAP协议。 
+ONVIF中的其他部分比如音视频流则通过RTP/RTSP进行。 
+协同性不同厂商所提供的产品均可以通过一个统一的“语言”来进行交流。方便了系统的
+集成。 
+灵活性终端用户和集成用户不需要被某些设备的固有解决方案所束缚。大大降低了开发成
+本。 
+质量保证不断扩展的规范将由市场来导向遵循规范的同时也满足主流的用户需求。 
+由于采用WSDL+XML模式使ONVIF规范的后续扩展不会遇到太多的麻烦。XML极强的
+扩展性与SOAP协议开发的便捷性将吸引到更多的人来关注和使用ONVIF规范。 
+ONVIF的组织日益壮大与同领域的PSIAHDCCTV相比占据了绝对的人员优势。会
+员企业不乏国内外著名的设备制造商与集成商。一套规范、协议的生命周期与市场占有率
+是息息相关的。而ONVIF规范的发展则正是由市场来导向由用户来充实的。每一个成员
+企业都拥有加强、扩充ONVIF规范的权利。ONVIF规范所涵盖的领域将不断增大。目前门
+禁系统的相关内容也即将被纳入ONVIF规范之中。 
+在安防、监控系统急速发展的今天效率和质量的领先所带来的价值不言而喻。ONVIF协
+议提供了这样的潜质。 ONVIF规范的实现机制 1、web service 
+2、wsdl 
+3、soap 
+Web Service是基于网络的、分布式的模块化组件执行特定的任务。Web Service 主要
+利用 HTTP 和 SOAP 协议使数据在 Web 上传输。Web 用户能够使用 SOAP 和 HTTP
+通过 Web 调用的方法来调用远程对象。  
+ 
+客户端根据 WSDL 描述文档会生成一个 SOAP 请求消息该请求会被嵌入在一个HTTP 
+POST请求中发送到 Web Services 所在的Web 服务器。Web Services 请求处理器解
+析收到的 SOAP 请求调用相应的 Web Services。然后再生成相应的 SOAP 应答。Web 
+服务器得到 SOAP 应答后会再通过 HTTP应答的方式把信息送回到客户端。  
+WSDL是Web services 描述语言Web Service Description Language的缩写。是一个
+用来描述Web服务和说明如何与Web服务通信的XML语言为用户提供详细的接口说明
+书。 
+SOAP是Simple Object Access Protocol的缩写。是基于XML的一种协议。一条 SOAP 消
+息就是一个普通的 XML 文档包含下列元素 
+必需的 Envelope 元素可把此 XML 文档标识为一条 SOAP 消息 
+可选的 Header 元素包含头部信息 
+必需的 Body 元素包含所有的调用和响应信息 
+可选的 Fault 元素提供有关在处理此消息所发生错误的信息 
+在向Web Service发送的SOAP请求中Body元素中的字段需与WSDL中数据类型的相
+符合。在构建SOAP的过程中必须从WSDL文件中获取并映射这一种对应关系。然而这
+样一个对应过程将是充满了重复性和机械性的为了避免不必要的人工差错以及节约开发时
+间一个名为gSOAP的编译工具应运而生。 
+gSOAP利用编译器技术提供了一组透明化的SOAP API并将与开发无关的SOAP实现细
+节相关的内容对用户隐藏起来。通过将WSDL文件解析序列化为C/C++文件最小化了
+Web Service的开发过程。 
+Web Service 开发流程  
+Web Service与视频监控 
+ONVIF规范向视频监控引入了Web Service的概念。设备的实际功能均被抽象为了Web 
+Service的服务视频监控系统的控制单元以客户端的身份出现通过Web请求的形式完
+成控制操作。 
+ Web Service能给视频监控系统带来什么 
+设备的无关性任何一个设备接入系统不会对其他系统造成影响。 
+设备的独立性每一个设备只负责对接收到的请求做出反馈甚至不需要知晓控制端的存在。 
+管理的集中性所有的控制由客户端来发起。 
+ONVIF规范能给视频监控系统带来什么 
+抽象了功能的接口。统一了对设备的配置以及操作的方式。 
+控制端关心的不是设备的型号而是设备所提供的Web Service 
+规范了视频系统中Web Service范围之外的行为。 
+ONVIF提供了各个模块的WSDL拥有效率非常高的开发方式。 ONVIF规范的内容 设备发现 
+设备管理 
+设备输入输出服务 
+图像配置 
+媒体配置 
+实时流媒体 
+接收端配置 
+显示服务 
+事件处理 
+PTZ控制 
+其他 基于ONVIF规范的项目的开发  
+ 
+ 预备知识 ONVIF规范中设备管理和控制部分所定义的接口均以Web Services的形式提供。ONVIF
+规范涵盖了完全的XML及WSDL的定义。每一个支持ONVIF规范的终端设备均须提供与
+功能相应的Web Service。服务端与客户端的数据交互采用SOAP协议。【来自
+http://blog.csdn.net/ghostyu】 
+ONVIF中的其他部分比如音视频流则通过RTP/RTSP进行。 
+那么WebServices、SOAP、WSDL、gSOAP又都是什么 
+假如我们需要开发一个linux上的app这个app需要与远端的Web服务有一个交互比
+如获取一个运算结果、或者是天气等那么我们就需要使用WebServices。 
+Web Services可以概述为 
+Web Services 可以将应用程序转换为网络应用程序。 
+通过使用 Web Services应用程序可以向全世界发布信息或提供某项功能。 
+Web Services 可以被其他应用程序使用。 
+通过 Web Services会计部门的 Win 服务器可以与 IT 供应商的 UNIX 服务器相连接。 
+基本的 Web Services 平台是 XML+HTTP。 
+Web services 使用 XML 来编解码数据并使用 SOAP 来传输数据。 
+SOAP又是什么 SOAP 是基于 XML 的简易协议可使应用程序在 HTTP 之上进行信息交换。或者更简单
+地说SOAP 是用于访问网络服务的协议。 
+对于应用程序开发来说使程序之间进行因特网通信是很重要的。目前的应用程序通过使用
+远程过程调用RPC在诸如 DCOM 与 CORBA 等对象之间进行通信但是 HTTP 不
+是为此设计的。RPC 会产生兼容性以及安全问题防火墙和代理服务器通常会阻止此类流
+量。通过 HTTP 在应用程序间通信是更好的方法因为 HTTP 得到了所有的因特网浏览
+器及服务器的支持。SOAP 就是被创造出来完成这个任务的。SOAP 提供了一种标准的方
+法使得运行在不同的操作系统并使用不同的技术和编程语言的应用程序可以互相进行通信。 
+如何实现SOAP 
+我们要知道SOAP协议是基于XML的那么如何能够将他们嵌入到C/C++的应用程序里使
+用 
+gSOAP编译工具就提供了一个SOAP/XML 关于C/C++ 语言的实现从而让C/C++语言
+开发web服务或客户端程序的工作变得轻松了很多。将与开发无关的SOAP协议的实现细
+节相关的内容对开发人员隐藏起来。因为SOAP提供的是一种标准化的方法gSOAP的编
+译器能够自动的将用户定义的本地化的C或C++数据类型转变为符合XML语法的数据结构
+这样只用一组简单的API就将用户从SOAP细节实现工作中解脱了出来可以专注与应
+用程序逻辑的实现工作了。并且可以跨越多个操作系统、语言环境以及在防火墙后的不同组
+织。 
+更直白的说使用gSOAP可以产生用于开发Web Services的SOAP通信协议方面的代码
+框架开发人员只需要实现server的被调用的函数然后在client端就可以像调用本地函
+数一样调用在远端的函数。gSOAP包含两个工具wsdl2h和soapcpp2用来产生代码框架。 
+开发Web服务程序需使用gSOAP生成服务器端和客户端代码框架通常情况下之需要
+实现server端或者实现client因为另一端通常是别人做好的比如ipnc中的onvif实现
+的server端。我们有两种做法 
+编写WSDL使用wsdl2h生成头文件再soapcpp2生成框架代码 
+编写头文件使用soapcpp2生成框架代码 
+这两种方式结果是一样的最终都有产生头文件并生成代码。不同在于在项目的开发
+中需要维护的文件不同前者是需要维护WSDL文件后者维护头文件。 SOAP调用示例 下面就使用第二种方法来实现一个简单的通信实例在远端实现两数相加然后返回运算结
+果。 
+1、下载gSOAP 
+我使用的版本时2.8.8http://www.kuaipan.cn/file/id_48923272389088693.htm 
+gSOAP-2.8软件包不需要安装直接解压在gsoap-2.8\gsoap\bin目录下是上面提到的两
+个命令行工具包含win32、linux、maxOS等三种版本在使用soapcpp2生产代码框架
+时一般需要gsoap-2.8\gsoap\import目录下和gsoap-2.8\gsoap\custom的文件。在命令行
+中使用-I<PATH>包含进来即可。 
+2、编写头文件:add.h 
+ 在这里我们不需要wsdl的文件可以直接从.h文件来生成代码。我们定义一个函数声明文
+件用来定义接口函数名称为add.h [cpp] view plaincopy
+ 1. //gsoapopt cw   
+2. //gsoap ns2 schema namespace: urn:add   
+3. //gsoap ns2 schema form: unqualified   
+4. //gsoap ns2 service name: add   
+5. //gsoap ns2 service type: addPortType   
+6. //gsoap ns2 service port:http://websrv.cs.fsu.edu/~engelen/addserver.cgi   
+7. //gsoap ns2 service namespace: urn:add   
+8. //gsoap ns2 service transport: http://schemas.xmlsoap.org/soap/http   
+9. //gsoap ns2  service method-style:      add rpc   
+10. //gsoap ns2  service method-encoding:   add http://schemas.xmlsoap.org/soap/
+encoding/   
+11. //gsoap ns2  service method-action:     add ""   
+12. int ns2__add( int num1, int num2, int* sum );   3、产生代码框架 我们执行一下命令自动生成一些远程调用需要的文件。先将他们加如到系统环境变量中 
+soapcpp2 -c add.h 
+-c是产生纯C代码如果提示找不到typemap.dat将gsoap-2.8\gsoap下的typemap.dat
+复制到当前目录就可以了。通过上列命令我们会得到如下文件  
+先大概记住他们的名字将来会提到他们。 
+4、添加服务端代码创建文件addserver.c [cpp] view plaincopy
+ 1. #include "soapH.h"   
+2. #include "add.nsmap"   
+3.    
+4. int main(int argc, char **argv)   
+5. {   
+6.     int m, s;   
+7.     struct soap add_soap;   
+8.     soap_init(&add_soap);   
+9.     soap_set_namespaces(&add_soap, namespaces);   
+10.    
+11.     if (argc < 2) {   
+12.         printf("usage: %s <server_port> \n", argv[0]);   
+13.         exit(1);   
+14.     } else {   
+15.         m = soap_bind(&add_soap, NULL, atoi(argv[1]), 100);   
+16.         if (m < 0) {   
+17.             soap_print_fault(&add_soap, stderr);   
+18.             exit(-1);   
+19.         }   
+20.         fprintf(stderr, "Socket connection successful: master socket = %d\n"
+, m);   
+21.         for (;;) {   
+22.             s = soap_accept(&add_soap);   
+23.             if (s < 0) {   
+24.                 soap_print_fault(&add_soap, stderr);   
+25.                 exit(-1);   
+26.             }   27.             fprintf(stderr, "Socket connection successful: slave socket = %d
+\n", s);   
+28.             soap_serve(&add_soap);   
+29.             soap_end(&add_soap);   
+30.         }   
+31.     }   
+32.     return 0;   
+33. }   
+34. #if 1   
+35. int ns2__add(struct soap *add_soap, int num1, int num2, int *sum)   
+36. {   
+37.     *sum = num1 + num2;   
+38.     return 0;   
+39. }   
+40. #endif   5、添加客户端代码创建文件addclient.c [cpp] view plaincopy
+ 1. #include "soapStub.h"   
+2. #include "add.nsmap"   
+3.    
+4. int add(const char *server, int num1, int num2, int *sum)   
+5. {   
+6.     struct soap add_soap;   
+7.     int result = 0;   
+8.     soap_init(&add_soap);   
+9.     soap_set_namespaces(&add_soap, namespaces);   
+10.     soap_call_ns2__add(&add_soap, server, NULL, num1, num2, sum);   
+11.     printf("server is %s, num1 is %d, num2 is %d/n", server, num1, num2);   
+12.    
+13.     if (add_soap.error) {   
+14.         printf("soap error: %d, %s, %s\n", add_soap.error, *soap_faultcode(&
+add_soap), *soap_faultstring(&add_soap));   
+15.         result = add_soap.error;   
+16.     }   
+17.     soap_end(&add_soap);   
+18.     soap_done(&add_soap);   
+19.     return result;   
+20. }   6、写客户端测试代码创建文件addtest.c [cpp] view plaincopy
+ 1. #include <stdio.h>   2. #include <stdlib.h>   
+3. #include <string.h>   
+4.    
+5. int add(const char *server, int num1, int num2, int *sum);   
+6. int main(int argc, char **argv)   
+7. {   
+8.     int result = -1;   
+9.     char server[128] = {0};   
+10.     int num1;   
+11.     int num2;   
+12.     int sum;   
+13.    
+14.     if (argc < 4) {   
+15.         printf("usage: %s <ip:port> num1 num2 \n", argv[0]);   
+16.         exit(1);   
+17.     }   
+18.    
+19.     strcpy(server,argv[1]);   
+20.     num1 = atoi(argv[2]);   
+21.     num2 = atoi(argv[3]);   
+22.     result = add(server, num1, num2,&sum);   
+23.    
+24.     if (result != 0) {   
+25.         printf("soap error, errcode=%d\n", result);   
+26.     } else {   
+27.         printf("%d + %d = %d\n", num1, num2, sum);   
+28.     }   
+29.     return 0;   
+30. }   7、编写Makefile编译前先将gsoap-2.8\gsoap目录下的stdsoap2.c和stdsoap2.h
+复制到当前目录下它提供了对SOAP协议的简单调用。 [cpp] view plaincopy
+ 1. GSOAP_ROOT = /root/onvif/gsoap-2.8/gsoap   
+2. CC = gcc -g -DWITH_NONAMESPACES   
+3. INCLUDE = -I$(GSOAP_ROOT)   
+4. SERVER_OBJS = soapC.o stdsoap2.o soapServer.o addserver.o    
+5. CLIENT_OBJS = soapC.o stdsoap2.o soapClient.o addclient.o addtest.o   
+6.    
+7. all: server   
+8. server: $(SERVER_OBJS)    
+9.     $(CC) $(INCLUDE) -o addserver $(SERVER_OBJS)    
+10.    
+11. client: $(CLIENT_OBJS)    12.     $(CC) $(INCLUDE) -o addtest $(CLIENT_OBJS)   
+13.    
+14. clean:   
+15.     rm -f *.o addtest   8、编译服务端make server编译客户端make client 得到addserver和addtest 9、测试 
+ 
+ 
+一个最简单的soap调用的例子完成了。 实例分析 服务端代码 
+下面我们来分析上面的例子刚才我们只是创建一个add.h头文件在add.h头文件中声明
+了一个函数 [cpp] view plaincopy
+ 1. int ns2__add( int num1, int num2, int* sum );   其他所有的的代码都是一句他来生成的。那么这个的实体在哪对就是在需要我们自己添
+加的addserver.c中  
+但是它好像多了一个struct soap类型的参数这是soap全局运行环境所有的函数都第
+一个包含这个参数。注意上面的Makefile不管是编译server还是编译client都是没有用
+到刚才的add.h文件的。ns2__add真正的声明在自动产生的soapStub.h中 
+ 
+然后在自动产生的soapServer.c中被soap_serve_ns2__add()函数调用。这样就将真正
+的加法运算的ns2__add函数和soap代码框架联系了起来。那么在客户端的代码中又是
+怎样来调用这个远程函数的呢 
+客户端代码 
+在刚才添加的addtest.c中main函数中调用一个简单的add函数 
+ 这个函数的实现也是我们自己添加的在addclient.c中 
+ 
+这个函数有些复杂因为它把客户端的调用和soap联系了起来还记得吗我们编译server
+和client的时候复制了两个文件stdsoap2.h和stdsoap2.c这里面的soap_init() soap_end()
+等函数来自他们。stdsoap2提供了soap协议的简单操作之需要简单的函数调用就能完成
+远程的函数调用。注意soap_call_ns2__add()它同样在soapStub.h中声明只不过是
+Client-Side Call Stubs不明白stub意思的可以搜索rpc 
+ 
+这个函数的实现在自动产生的soapClient.c源文件中。同样不需要我们实现。 
+这样就可以通过调用gSOAP提供的stdsoap2的soap_init和自动产生的
+soap_call_ns2__add就实现了远程主机上的ns2__add函数的调用  
+ 
+ 
+  onvif规范的实现使用gSOAP创建SOAP调用实例 
+说明网上关于ONVIF开发的文章并不多也更找不到具体的实例来入门学习。只能靠翻
+阅各种Specification摸索中前进下面是最近几天的成果。调通了服务端或者说设备端
+的Discovery使用OnvifTestTool12.06能够搜到我的设备。【来自
+http://blog.csdn.net/ghostyu】 1、在使用wsdl2h产生头文件前需要修改
+typemap.dat 修改的依据在这里http://www.cs.fsu.edu/~engelen/soap.html在FAQ页面下的How do 
+I use gSOAP for the ONVIF specifications? [cpp] view plaincopy 1. #Use gSOAP 2.8.10 and up. In the typemap.dat file used by wsdl2h, add:   
+2. #   ONVIF recommended prefixes   
+3. tds = "http://www.onvif.org/ver10/device/wsdl"   
+4. tev = "http://www.onvif.org/ver10/events/wsdl"   
+5. tls = "http://www.onvif.org/ver10/display/wsdl"   
+6. tmd = "http://www.onvif.org/ver10/deviceIO/wsdl"   
+7. timg    = "http://www.onvif.org/ver20/imaging/wsdl"   
+8. trt = "http://www.onvif.org/ver10/media/wsdl"   
+9. tptz    = "http://www.onvif.org/ver20/ptz/wsdl"   
+10. trv = "http://www.onvif.org/ver10/receiver/wsdl"   
+11. trc = "http://www.onvif.org/ver10/recording/wsdl"   
+12. tse = "http://www.onvif.org/ver10/search/wsdl"   
+13. trp = "http://www.onvif.org/ver10/replay/wsdl"   
+14. tan = "http://www.onvif.org/ver20/analytics/wsdl"   
+15. tad = "http://www.onvif.org/ver10/analyticsdevice/wsdl"   
+16. tdn = "http://www.onvif.org/ver10/network/wsdl"   
+17. tt  = "http://www.onvif.org/ver10/schema"   
+18. #   OASIS recommended prefixes   
+19. wsnt    = "http://docs.oasis-open.org/wsn/b-2"   
+20. wsntw   = "http://docs.oasis-open.org/wsn/bw-2"   
+21. wsrfbf  = "http://docs.oasis-open.org/wsrf/bf-2"   
+22. wsrfr   = "http://docs.oasis-open.org/wsrf/r-2"   
+23. wsrfrw  = "http://docs.oasis-open.org/wsrf/rw-2"   
+24. wstop   = "http://docs.oasis-open.org/wsn/t-1"   
+25. #   WS-Discovery 1.0 remapping   26. wsdd10__HelloType       = | wsdd__HelloType   
+27. wsdd10__ByeType         = | wsdd__ByeType   
+28. wsdd10__ProbeType       = | wsdd__ProbeType   
+29. wsdd10__ProbeMatchesType    = | wsdd__ProbeMatchesType   
+30. wsdd10__ProbeMatchType      = | wsdd__ProbeMatchType   
+31. wsdd10__ResolveType     = | wsdd__ResolveType   
+32. wsdd10__ResolveMatchesType  = | wsdd__ResolveMatchesType   
+33. wsdd10__ResolveMatchType    = | wsdd__ResolveMatchType   
+34. #   SOAP-ENV mapping   
+35. SOAP_ENV__Envelope  = struct SOAP_ENV__Envelope { struct SOAP_ENV__Header *S
+OAP_ENV__Header; _XML SOAP_ENV__Body; }; | struct SOAP_ENV__Envelope   
+36. SOAP_ENV__Header    = | struct SOAP_ENV__Header   
+37. SOAP_ENV__Fault     = | struct SOAP_ENV__Fault   
+38. SOAP_ENV__Detail    = | struct SOAP_ENV__Detail   
+39. SOAP_ENV__Code      = | struct SOAP_ENV__Code   
+40. SOAP_ENV__Subcode   = | struct SOAP_ENV__Subcode   
+41. SOAP_ENV__Reason    = | struct SOAP_ENV__Reason   2、根据onvif官网提供的remotediscovery.wsdl
+产生onvif.h头文件 关于onvif所有的wsdl都在这里http://www.onvif.org/Documents/Specifications.aspx中
+的ONVIF WSDL and XML Schemas Specifications一节虽然可以全部下载为wsdl文件
+但是wsdl文件中存在相互依赖的关系并且是带有存储的依赖所以最好直接使用url来
+产生头文件不要下载下来。 [html] view plaincopy 1. wsdl2h -o onvif.h -c -s -t ./typemap.dat http://www.onvif.org/onvif/ver10/ne
+twork/wsdl/remotediscovery.wsdl   3、使用onvif.h来产生骨架代码 [html] view plaincopy 1. soapcpp2 -c onvif.h -x -I /root/onvif/gsoap-2.8/gsoap/import -I /root/onvif/
+gsoap-2.8/gsoap/   4、ProbeMatches代码 这样就创建了基本的服务端和客户端的代码了下面需要添加具体的代码了。 其中包括 (1)创建组播用的udp socket绑定组播地址为239.255.255.250端口为3702因为
+ws-discovery的组播地址和端口就是为239.255.255.250和3702 
+(2)在产生的Probe函数中添加ProbeMatches代码 
+首先是udp socket [cpp] view plaincopy 1. int bind_server_udp1(int server_s)   
+2. {   
+3.     struct sockaddr_in local_addr;   
+4.     memset(&local_addr,0,sizeof(local_addr));   
+5.     local_addr.sin_family = AF_INET;   
+6.     local_addr.sin_addr.s_addr = htonl(INADDR_ANY);   
+7.     local_addr.sin_port = htons(3702);   
+8.     return bind(server_s,(struct sockaddr*)&local_addr,sizeof(local_addr)); 
+  
+9.    
+10. }   
+11. static int create_server_socket_udp(void)   
+12. {   
+13.     int server_udp;   
+14.     unsigned char one = 1;   
+15.     int sock_opt = 1;   
+16.        
+17.     //server_udp = socket(PF_INET, SOCK_DGRAM, 0);   
+18.     server_udp = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);   
+19.     if (server_udp == -1) {   
+20.         printf("unable to create socket\n");   
+21.     }   
+22.    
+23.     /* reuse socket addr */   
+24.     if ((setsockopt(server_udp, SOL_SOCKET, SO_REUSEADDR, (void *) &sock_opt
+,   
+25.                     sizeof (sock_opt))) == -1) {   
+26.         printf("setsockopt\n");   
+27.     }   
+28.     if ((setsockopt(server_udp, IPPROTO_IP, IP_MULTICAST_LOOP,   
+29.                        &one, sizeof (unsigned char))) == -1) {   
+30.         printf("setsockopt\n");   
+31.     }   
+32.    
+33.     struct ip_mreq mreq;   
+34.     mreq.imr_multiaddr.s_addr = inet_addr("239.255.255.250");   35.     mreq.imr_interface.s_addr = htonl(INADDR_ANY);   
+36.    
+37.     if(setsockopt(server_udp,IPPROTO_IP,IP_ADD_MEMBERSHIP,&mreq,sizeof(mreq)
+)==-1){   
+38.         perror("memberchip error\n");   
+39.     }   
+40.    
+41.     return server_udp;   
+42. }   需要注意几点1/设置socket属性SO_REUSEADDR2、设置socket属性
+IP_ADD_MEMBERSHIP目的是让3702的端口能够重复绑定一家加入组播组。 其次是添加ProbeMatches代码 
+(1)首先复制client的soap_send___wsdd__ProbeMatches函数到服务端来因为
+soap_send___wsdd__ProbeMatches已经写好了用于响应Probe消息的框架了不用白不
+用啊。 
+(2)编写__wsdd__Probe函数添加如下内容 [cpp] view plaincopy 1. int  __wsdd__Probe(struct soap* soap, struct wsdd__ProbeType *wsdd__Probe)   
+2. {   
+3.     DBG("__wsdd__Probe\n");   
+4.     char macaddr[6];   
+5.     char _IPAddr[INFO_LENGTH];   
+6.     char _HwId[1024];   
+7.        
+8.     wsdd__ProbeMatchesType ProbeMatches;   
+9.     ProbeMatches.ProbeMatch = (struct wsdd__ProbeMatchType *)soap_malloc(soa
+p, sizeof(struct wsdd__ProbeMatchType));   
+10.     ProbeMatches.ProbeMatch->XAddrs = (char *)soap_malloc(soap, sizeof(char)
+ * INFO_LENGTH);   
+11.     ProbeMatches.ProbeMatch->Types = (char *)soap_malloc(soap, sizeof(char) 
+* INFO_LENGTH);   
+12.     ProbeMatches.ProbeMatch->Scopes = (struct wsdd__ScopesType*)soap_malloc(
+soap,sizeof(struct wsdd__ScopesType));   
+13.     ProbeMatches.ProbeMatch->wsa__EndpointReference.ReferenceProperties = (s
+truct wsa__ReferencePropertiesType*)soap_malloc(soap,sizeof(struct wsa__Refe
+rencePropertiesType));   
+14.     ProbeMatches.ProbeMatch->wsa__EndpointReference.ReferenceParameters = (s
+truct wsa__ReferenceParametersType*)soap_malloc(soap,sizeof(struct wsa__Refe
+renceParametersType));   15.     ProbeMatches.ProbeMatch->wsa__EndpointReference.ServiceName = (struct ws
+a__ServiceNameType*)soap_malloc(soap,sizeof(struct wsa__ServiceNameType));   
+16.     ProbeMatches.ProbeMatch->wsa__EndpointReference.PortType = (char **)soap
+_malloc(soap, sizeof(char *) * SMALL_INFO_LENGTH);   
+17.     ProbeMatches.ProbeMatch->wsa__EndpointReference.__any = (char **)soap_ma
+lloc(soap, sizeof(char*) * SMALL_INFO_LENGTH);   
+18.     ProbeMatches.ProbeMatch->wsa__EndpointReference.__anyAttribute = (char *
+)soap_malloc(soap, sizeof(char) * SMALL_INFO_LENGTH);   
+19.     ProbeMatches.ProbeMatch->wsa__EndpointReference.Address = (char *)soap_m
+alloc(soap, sizeof(char) * INFO_LENGTH);   
+20.    
+21.     macaddr[0]=0x01;macaddr[1]=0x01;macaddr[2]=0x01;macaddr[3]=0x01;macaddr[
+4]=0x01;macaddr[5]=0x01;   
+22.     sprintf(_HwId,"urn:uuid:2419d68a-2dd2-21b2-a205-%02X%02X%02X%02X%02X%02X
+",macaddr[0], macaddr[1], macaddr[2], macaddr[3], macaddr[4], macaddr[5]);   
+23.    
+24.     sprintf(_IPAddr, "http://%03d.%03d.%1d.%03d/onvif/device_service", 192, 
+168, 1, 233);   
+25.     ProbeMatches.__sizeProbeMatch = 1;   
+26.     ProbeMatches.ProbeMatch->Scopes->__item =(char *)soap_malloc(soap, 1024)
+;   
+27.     memset(ProbeMatches.ProbeMatch->Scopes->__item,0,sizeof(ProbeMatches.Pro
+beMatch->Scopes->__item));     
+28.    
+29.     //Scopes MUST BE   
+30.     strcat(ProbeMatches.ProbeMatch->Scopes->__item, "onvif://www.onvif.org/t
+ype/NetworkVideoTransmitter");   
+31.    
+32.     ProbeMatches.ProbeMatch->Scopes->MatchBy = NULL;   
+33.     strcpy(ProbeMatches.ProbeMatch->XAddrs, _IPAddr);   
+34.     strcpy(ProbeMatches.ProbeMatch->Types, wsdd__Probe->Types);   
+35.     DBG("wsdd__Probe->Types=%s\n",wsdd__Probe->Types);   
+36.     ProbeMatches.ProbeMatch->MetadataVersion = 1;   
+37.     //ws-discovery规定 为可选项   
+38.     ProbeMatches.ProbeMatch->wsa__EndpointReference.ReferenceProperties->__s
+ize = 0;   
+39.     ProbeMatches.ProbeMatch->wsa__EndpointReference.ReferenceProperties->__a
+ny = NULL;   
+40.     ProbeMatches.ProbeMatch->wsa__EndpointReference.ReferenceParameters->__s
+ize = 0;   
+41.     ProbeMatches.ProbeMatch->wsa__EndpointReference.ReferenceParameters->__a
+ny = NULL;   
+42.        43.     ProbeMatches.ProbeMatch->wsa__EndpointReference.PortType[0] = (char *)so
+ap_malloc(soap, sizeof(char) * SMALL_INFO_LENGTH);   
+44.     //ws-discovery规定 为可选项   
+45.     strcpy(ProbeMatches.ProbeMatch->wsa__EndpointReference.PortType[0], "ttl
+");   
+46.     ProbeMatches.ProbeMatch->wsa__EndpointReference.ServiceName->__item = NU
+LL;   
+47.     ProbeMatches.ProbeMatch->wsa__EndpointReference.ServiceName->PortName = 
+NULL;   
+48.     ProbeMatches.ProbeMatch->wsa__EndpointReference.ServiceName->__anyAttrib
+ute = NULL;   
+49.     ProbeMatches.ProbeMatch->wsa__EndpointReference.__any[0] = (char *)soap_
+malloc(soap, sizeof(char) * SMALL_INFO_LENGTH);   
+50.     strcpy(ProbeMatches.ProbeMatch->wsa__EndpointReference.__any[0], "Any");
+   
+51.     strcpy(ProbeMatches.ProbeMatch->wsa__EndpointReference.__anyAttribute, "
+Attribute");   
+52.     ProbeMatches.ProbeMatch->wsa__EndpointReference.__size = 0;   
+53.     strcpy(ProbeMatches.ProbeMatch->wsa__EndpointReference.Address, _HwId); 
+  
+54.    
+55.     /*注释的部分为可选注释掉onvif test也能发现ws-d*/   
+56.     //soap->header->wsa__To = "http://schemas.xmlsoap.org/ws/2004/08/address
+ing/role/anonymous";   
+57.     //soap->header->wsa__Action = "http://schemas.xmlsoap.org/ws/2005/04/dis
+covery/ProbeMatches";   
+58.     soap->header->wsa__RelatesTo = (struct wsa__Relationship*)soap_malloc(so
+ap, sizeof(struct wsa__Relationship));   
+59.     //it's here   
+60.     soap->header->wsa__RelatesTo->__item = soap->header->wsa__MessageID;   
+61.     soap->header->wsa__RelatesTo->RelationshipType = NULL;   
+62.     soap->header->wsa__RelatesTo->__anyAttribute = NULL;   
+63.    
+64.     soap->header->wsa__MessageID =(char *)soap_malloc(soap, sizeof(char) * I
+NFO_LENGTH);   
+65.     strcpy(soap->header->wsa__MessageID,_HwId+4);   
+66.    
+67.     /* send over current socket as HTTP OK response: */   
+68.     /*测试过第二参数必须httpaction随意*/   
+69.     soap_send___wsdd__ProbeMatches(soap, "http://", NULL, &ProbeMatches);   
+70.     return SOAP_OK;   
+71.    
+72. }   想要写出上述代码是一定要了解SOAP格式的在WS-Discovery中描述了discovery
+所用的soap格式 1首先是了解消息头header和ProbeMatches中的内容非常重要可以参考这里
+http://www.w3.org/Submission/ws-addressing/  最好详细的学习一下里面的内容非常
+重要。 
+2其次需要理解的是其实当你看完ws-addressing后你会发现骨架代码中的结构体和
+SOAP消息中的内容是一一对应的例如 
+结构体osap->header对应SOAP消息的<SOAP-ENV:Header></SOAP-ENV:Header>
+中的内容包含在header里的内容当然会包含在SOAP的header内。例如 
+结构体soap->header->wsa__RelatesTo对应的是<wsa:RelatesTo></wsa:RelatesTo>。 
+3最后需要理解的是在代码中的"__"双下划线一般对应xml中的命名空间的":"下划线
+前是命名空间后是具体内容。 
+4最后的最后是要详细的阅读ONVIF Core Specification 
+下图为响应OnvifTestTool的Probe命令的SOAP消息 
+ 结合上图再分析代码就亲切多了。在ONVIF Core Specification的7.3.2.2  Scopes 一节描
+述了onvif需要的Scopes这个是需要在程序里填充具体填充什么文档里说的很明确 
+ 
+注意点是在太多随便漏掉一个都可能会导致搜不到设备下图是非常重要的一个 
+ 
+SOAP1.1和SOAP1.2所使用的SOAP-ENV是不同的ONVIF使用的是SOAP1.1如果
+soapcpp2产生的nsmap文件中的SOAP-ENV是SOAP1.2版本的话那么OnvifTestTool
+是不会识别设备发出的SOAP消息的。 5、该main函数登场了 [cpp] view plaincopy 1. int main()   
+2. {   
+3.     int server_udp;   
+4.        
+5.     int retval=0;   
+6.     struct soap *soap_udp;   
+7.     int fault_flag = 0;   
+8.        
+9.     server_udp = create_server_socket_udp();   
+10.     bind_server_udp1(server_udp);   
+11.     while(1){   
+12.         soap_udp=soap_new();   
+13.         soap_init1(soap_udp, SOAP_IO_UDP);   
+14.         soap_udp->master = server_udp;   
+15.         soap_udp->socket = server_udp;   
+16.         soap_udp->errmode = 0;   
+17.         soap_udp->bind_flags = 1;   
+18.         if (!soap_valid_socket(soap_bind(soap_udp, NULL, 3702, 100)))   
+19.         {       
+20.             soap_print_fault(soap_udp, stderr);   
+21.         }   
+22.         fprintf(stderr,"soap_serve starting..\n");   
+23.         retval = soap_serve(soap_udp); //阻塞在这里   
+24.         fprintf(stderr,"retval=%d\n",retval);   
+25.         if(retval && !(fault_flag))   
+26.         {   
+27.             fault_flag = 1;   
+28.         }   
+29.         else if(!retval)   
+30.         {   
+31.             fault_flag = 0;   
+32.         }   
+33.         soap_destroy(soap_udp);   
+34.         soap_end(soap_udp);   
+35.         soap_done(soap_udp);   
+36.         free(soap_udp);   
+37.     }   
+38. }   soap_server函数会一直阻塞直到接收到SOAP消息并且该处理是一次性的所以要将
+将soap_server放到while里或者独立的线程中。 
+最后编译运行 make server 
+./discovery.tmp 
+单击OnvifTestTool的Discover Devices运行discovery.tmp的中会打印调试信息如图 
+ 
+然后在OnvifTestTool中会搜索到我的设备 
+ 
+响应Discover Devices的SOAP消息如下 [html] view plaincopy 1. <?xml version="1.0" encoding="UTF-8"?>   
+2. <SOAP-ENV:Envelope    
+3.     xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"    
+4.     xmlns:SOAP-ENC="http://www.w3.org/2003/05/soap-encoding"    
+5.     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    
+6.     xmlns:xsd="http://www.w3.org/2001/XMLSchema"    
+7.     xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"    
+8.     xmlns:wsdd="http://schemas.xmlsoap.org/ws/2005/04/discovery"    
+9.     xmlns:ns1="http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBindin
+g"    
+10.     xmlns:ns2="http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBindin
+g"    
+11.     xmlns:ns3="http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBindin
+g"    
+12.     xmlns:tdn="http://www.onvif.org/ver10/network/wsdl">   
+13.    
+14.     <SOAP-ENV:Header>   
+15.         <wsa:MessageID>uuid:2419d68a-2dd2-21b2-a205-010101010101</wsa:Messag
+eID>   
+16.         <wsa:RelatesTo>uuid:88a3958a-6155-4510-8279-69aeafd31681</wsa:Relate
+sTo>   
+17.         <wsa:To SOAP-ENV:mustUnderstand="true">urn:schemas-xmlsoap-org:ws:20
+05:04:discovery</wsa:To>   
+18.         <wsa:Action SOAP-ENV:mustUnderstand="true">http://schemas.xmlsoap.or
+g/ws/2005/04/discovery/Probe</wsa:Action>   
+19.     </SOAP-ENV:Header>   
+20.    
+21.     <SOAP-ENV:Body>   
+22.         <wsdd:ProbeMatches>   
+23.             <wsdd:ProbeMatch xmlns:_0="http://www.onvif.org/ver10/device/wsd
+l">   
+24.                 <wsa:EndpointReference>   
+25.                 <wsa:Address>urn:uuid:2419d68a-2dd2-21b2-a205-010101010101</
+wsa:Address>   
+26.                 <wsa:ReferenceProperties></wsa:ReferenceProperties>   
+27.                 <wsa:ReferenceParameters></wsa:ReferenceParameters>   
+28.                 <wsa:PortType>ttl</wsa:PortType>   
+29.                 </wsa:EndpointReference>   
+30.                 <wsdd:Types>_0:Device</wsdd:Types>   
+31.                 <wsdd:Scopes>onvif://www.onvif.org/type/NetworkVideoTransmit
+ter</wsdd:Scopes>   
+32.                 <wsdd:XAddrs>http://192.168.1.233/onvif/device_service</wsdd
+:XAddrs>   33.                 <wsdd:MetadataVersion>1</wsdd:MetadataVersion>   
+34.             </wsdd:ProbeMatch>   
+35.         </wsdd:ProbeMatches>   
+36.     </SOAP-ENV:Body>   
+37. </SOAP-ENV:Envelope>   资料下载 上述完整的代码包在这里有需要的就去下载吧
+http://download.csdn.net/detail/ghostyu/4766025 
+另外我参考的部分文档可以再这里下载 
+ONVIF-Core-Spec-v210.pdfhttp://download.csdn.net/detail/ghostyu/4766067 
+gSOAP手册http://download.csdn.net/detail/ghostyu/4766075 
+OnvifTestTool12.06测试工具网上有的我就不上传了。 
+   onvif规范的实现server端Discovery实现通过
+OnvifTestTool12.06测试 有了前几篇的基础现在可以正式开始onvif的实现工作其中一项非常重要的部分就是视
+频流的对接即能够在符合onvif标准的监控客户端软件里接收到设备端NVT发来的RTSP
+视频流。这里我所用的客户端软件是Onvif Device Manager v2.2。【来自
+http://blog.csdn.net/ghostyu】 
+ONVIF Profile S Specification文档描述了Device或者说DVT和Client可以使用的一种
+ProfileProfile这个词在计算机领域非常常见我们可以理解成一种方案、配置、框架等。 
+文档里描述了如果实现VideoStreamdevice和client应该具备的条件当然如果实现文档
+的所有条件就可以说该设备符合Profile S 
+如果单纯实现VideoStream只需完成下列命令。 [plain] view plaincopy
+ 1. 1、GetProfiles   
+2. 2、GetStreamUri    
+3. 填充rtsp路径例如rtsp://192.168.1.201/petrov.m4e   
+4. 3、Media Streaming using RTSP   
+5. 这里使用开源的live555完成rtsp功能   
+6. 4、GetVideoEncoderConfiguration   
+7. 5、GetVideoEncoderConfigurationOptions   
+8. 6、GetCapabilities   
+9. NVC为了获取DVT所支持的功能的命令   参考文档 [plain] view plaincopy
+ 1. 1、ONVIF Profile S Specification   
+2. 描述ProfileS是什么样的一个东西如何实现   
+3. 2、Reference_of_ONVIF_Development_v1.01.02   
+4. Onvif DVT设计参考指明了一条道路但没有具体内容   
+5. 3、ONVIF-Media-Service-Spec-v220   
+6. Onvif Media的说明介绍   
+7. 4、http://www.onvif.org/onvif/ver20/util/operationIndex.html   8. onvif几乎全部命令的详细说明非常重要。该文档告诉我们结构体成员的意义和如何填充。Onvif
+开发其实就是各种结构体的填充。   一、产生onvif源码框架 1、从wsdl生成C头文件 [cpp] view plaincopy
+ 1. wsdl2h -o onvif.h -c -s -t .\typemap.dat http://www.onvif.org/onvif/ver10/de
+vice/wsdl/devicemgmt.wsdl http://www.onvif.org/onvif/ver10/event/wsdl/event.
+wsdl http://www.onvif.org/onvif/ver10/display.wsdl http://www.onvif.org/onvi
+f/ver10/deviceio.wsdl http://www.onvif.org/onvif/ver20/imaging/wsdl/imaging.
+wsdl http://www.onvif.org/onvif/ver10/media/wsdl/media.wsdl http://www.onvif
+.org/onvif/ver20/ptz/wsdl/ptz.wsdl  http://www.onvif.org/onvif/ver10/receive
+r.wsdl http://www.onvif.org/onvif/ver10/recording.wsdl  http://www.onvif.org
+/onvif/ver10/search.wsdl http://www.onvif.org/onvif/ver10/network/wsdl/remot
+ediscovery.wsdl http://www.onvif.org/onvif/ver10/replay.wsdl http://www.onvi
+f.org/onvif/ver20/analytics/wsdl/analytics.wsdl http://www.onvif.org/onvif/v
+er10/analyticsdevice.wsdl  http://www.onvif.org/onvif/ver10/schema/onvif.xsd
+  http://www.onvif.org/ver10/actionengine.wsdl   跟前一篇discovery唯一不同的是这里多了很多wsdl文件这次创建完整的onvif代码框
+架 2、从头文件生成源码框架 [cpp] view plaincopy
+ 1. soapcpp2 -c onvif.h -x -I /root/onvif/gsoap-2.8/gsoap/import -I /root/onvif/
+gsoap-2.8/gsoap/   产生的C文件比较庞大最大的有十几兆大部分的内容没有复用导致。 二、创建soap运行环境 [cpp] view plaincopy
+ 1. int main(int argc, char **argv)     
+2. {     
+3.     int m, s;     
+4.     struct soap add_soap;     
+5.     int server_udp;   
+6.    
+7.     server_udp = create_server_socket_udp();   
+8.     //bind_server_udp1(server_udp);   
+9.     pthread_t thrHello;   10.     pthread_t thrProbe;   
+11.     //pthread_create(&thrHello,NULL,main_Hello,server_udp);   
+12.     //sleep(2);   
+13.     pthread_create(&thrProbe,NULL,main_Probe,server_udp);   
+14.    
+15.     soap_init(&add_soap);     
+16.     soap_set_namespaces(&add_soap, namespaces);     
+17.    
+18.    
+19.     if (argc < 0) {     
+20.         printf("usage: %s <server_port> \n", argv[0]);     
+21.         exit(1);     
+22.     } else {     
+23.         m = soap_bind(&add_soap, NULL, 80, 100);     
+24.         if (m < 0) {     
+25.             soap_print_fault(&add_soap, stderr);     
+26.             exit(-1);     
+27.         }     
+28.         fprintf(stderr, "Socket connection successful: master socket = %d\n"
+, m);     
+29.         for (;;) {     
+30.             s = soap_accept(&add_soap);     
+31.             if (s < 0) {     
+32.                 soap_print_fault(&add_soap, stderr);     
+33.                 exit(-1);     
+34.             }     
+35.             fprintf(stderr, "Socket connection successful: slave socket = %d
+\n", s);     
+36.             soap_serve(&add_soap);     
+37.             soap_end(&add_soap);     
+38.         }     
+39.     }     
+40.     return 0;     
+41. }    注意这里绑定了80端口onvif使用的是http请求然后附带xml其实正常的是将onvif
+集成到web服务器中普通的http请求有web服务器处理onvif的http请求则有soap
+处理。我们这里的做法也可行只不过onvif的访问web服务器的功能是无法使用的。 三、RTSP视频对接 1、实现GetCapabilities命令 客户端发送GetCapabilities命令来得到设备端的能力然后依据GetCapabilities返回的结
+果再来进行下一步操作 
+在__tds__GetCapabilities函数中我们只需要填充Media部分和一些必要的即可 [cpp] view plaincopy
+ 1. //想要对接RTSP视频必须设置Media   
+2. tds__GetCapabilitiesResponse->Capabilities->Media = (struct tt__MediaCapabil
+ities*)soap_malloc(soap, sizeof(struct tt__MediaCapabilities));   
+3. tds__GetCapabilitiesResponse->Capabilities->Media->XAddr = (char *) soap_mal
+loc(soap, sizeof(char) * LARGE_INFO_LENGTH);   
+4. strcpy(tds__GetCapabilitiesResponse->Capabilities->Media->XAddr, _IPv4Addres
+s);   
+5. tds__GetCapabilitiesResponse->Capabilities->Media->StreamingCapabilities = (
+struct tt__RealTimeStreamingCapabilities*)soap_malloc(soap, sizeof(struct tt
+__RealTimeStreamingCapabilities));   
+6. tds__GetCapabilitiesResponse->Capabilities->Media->StreamingCapabilities->RT
+PMulticast = (int *)soap_malloc(soap, sizeof(int));    
+7. *tds__GetCapabilitiesResponse->Capabilities->Media->StreamingCapabilities->R
+TPMulticast = _false;      
+8. tds__GetCapabilitiesResponse->Capabilities->Media->StreamingCapabilities->RT
+P_USCORETCP = (int *)soap_malloc(soap, sizeof(int));   
+9. *tds__GetCapabilitiesResponse->Capabilities->Media->StreamingCapabilities->R
+TP_USCORETCP = _true;      
+10. tds__GetCapabilitiesResponse->Capabilities->Media->StreamingCapabilities->RT
+P_USCORERTSP_USCORETCP = (int *)soap_malloc(soap, sizeof(int));   
+11. *tds__GetCapabilitiesResponse->Capabilities->Media->StreamingCapabilities->R
+TP_USCORERTSP_USCORETCP = _true;       
+12. tds__GetCapabilitiesResponse->Capabilities->Media->StreamingCapabilities->Ex
+tension = NULL;   
+13. tds__GetCapabilitiesResponse->Capabilities->Media->Extension = NULL;   
+14. tds__GetCapabilitiesResponse->Capabilities->Media->__size = 0;   
+15. tds__GetCapabilitiesResponse->Capabilities->Media->__any = 0;   另外必要填充的还有 [cpp] view plaincopy
+ 1. //下面的重要这里只实现视频流需要设置VideoSources   
+2. tds__GetCapabilitiesResponse->Capabilities->Extension->DeviceIO->VideoSource
+s = TRUE;   3. tds__GetCapabilitiesResponse->Capabilities->Extension->DeviceIO->VideoOutput
+s = FALSE;   
+4. tds__GetCapabilitiesResponse->Capabilities->Extension->DeviceIO->AudioSource
+s = FALSE;   
+5. tds__GetCapabilitiesResponse->Capabilities->Extension->DeviceIO->AudioOutput
+s = FALSE;   
+6. tds__GetCapabilitiesResponse->Capabilities->Extension->DeviceIO->RelayOutput
+s = FALSE;   
+7. tds__GetCapabilitiesResponse->Capabilities->Extension->DeviceIO->__size = 0;
+   
+8. tds__GetCapabilitiesResponse->Capabilities->Extension->DeviceIO->__any = NUL
+L;   
+9.    
+10. tds__GetCapabilitiesResponse->Capabilities->Extension->Display = NULL;   
+11. tds__GetCapabilitiesResponse->Capabilities->Extension->Recording = NULL;   
+12. tds__GetCapabilitiesResponse->Capabilities->Extension->Search = NULL;   
+13. tds__GetCapabilitiesResponse->Capabilities->Extension->Replay = NULL;   
+14. tds__GetCapabilitiesResponse->Capabilities->Extension->Receiver = NULL;   
+15. tds__GetCapabilitiesResponse->Capabilities->Extension->AnalyticsDevice = NUL
+L;   
+16. tds__GetCapabilitiesResponse->Capabilities->Extension->Extensions = NULL;   
+17. tds__GetCapabilitiesResponse->Capabilities->Extension->__size = 0;   
+18. tds__GetCapabilitiesResponse->Capabilities->Extension->__any = NULL;   2、实现GetServices命令 [cpp] view plaincopy
+ 1. int  __tds__GetServices(struct soap* soap, struct _tds__GetServices *tds__Ge
+tServices, struct _tds__GetServicesResponse *tds__GetServicesResponse)   
+2. {   
+3.     DBG("__tds__GetServices\n");   
+4.     /*该函数很必要*/   
+5.     char _IPAddr[INFO_LENGTH];   
+6.     int i = 0;   
+7.     sprintf(_IPAddr, "http://%03d.%03d.%03d.%03d/onvif/services", 192, 168, 
+1, 233);   
+8.     tds__GetServicesResponse->__sizeService = 1;   
+9.    
+10.     tds__GetServicesResponse->Service = (struct tds__Service *)soap_malloc(s
+oap, sizeof(struct tds__Service));   
+11.     tds__GetServicesResponse->Service[0].XAddr = (char *)soap_malloc(soap, s
+izeof(char) * INFO_LENGTH);   
+12.     tds__GetServicesResponse->Service[0].Namespace = (char *)soap_malloc(soa
+p, sizeof(char) * INFO_LENGTH);   13.     strcpy(tds__GetServicesResponse->Service[0].Namespace, "http://www.onvif
+.org/ver10/events/wsdl");   
+14.     strcpy(tds__GetServicesResponse[0].Service->XAddr, _IPAddr);   
+15.     tds__GetServicesResponse->Service[0].Capabilities = NULL;   
+16.     tds__GetServicesResponse->Service[0].Version = (struct tt__OnvifVersion 
+*)soap_malloc(soap, sizeof(struct tt__OnvifVersion));   
+17.     tds__GetServicesResponse->Service[0].Version->Major = 0;   
+18.     tds__GetServicesResponse->Service[0].Version->Minor = 3;   
+19.     tds__GetServicesResponse->Service[0].__any = (char **)soap_malloc(soap, 
+sizeof(char *));   
+20.     tds__GetServicesResponse->Service[0].__any[0] = (char *)soap_malloc(soap
+, sizeof(char) * INFO_LENGTH);   
+21.     strcpy(tds__GetServicesResponse->Service[0].__any[0],"why1");   
+22.     tds__GetServicesResponse->Service[0].__any[1] = (char *)soap_malloc(soap
+,sizeof(char) * INFO_LENGTH);   
+23.     strcpy(tds__GetServicesResponse->Service[0].__any[1],"why2");   
+24.     tds__GetServicesResponse->Service[0].__size = NULL;   
+25.     tds__GetServicesResponse->Service[0].__anyAttribute = NULL;   
+26.     return SOAP_OK;   
+27. }   3、实现GetVideoSources命令 [html] view plaincopy
+ 1. int  __tmd__GetVideoSources(struct soap* soap, struct _trt__GetVideoSources 
+*trt__GetVideoSources, struct _trt__GetVideoSourcesResponse *trt__GetVideoSo
+urcesResponse)   
+2. {   
+3.     DBG("__tmd__GetVideoSources\n");   
+4.    
+5.     int size1;   
+6.     size1 = 1;   
+7.     trt__GetVideoSourcesResponse->__sizeVideoSources = size1;   
+8.     trt__GetVideoSourcesResponse->VideoSources = (struct tt__VideoSource *)s
+oap_malloc(soap, sizeof(struct tt__VideoSource) * size1);   
+9.     trt__GetVideoSourcesResponse->VideoSources[0].Framerate = 30;   
+10.     trt__GetVideoSourcesResponse->VideoSources[0].Resolution = (struct tt__V
+ideoResolution *)soap_malloc(soap, sizeof(struct tt__VideoResolution));   
+11.     trt__GetVideoSourcesResponse->VideoSources[0].Resolution->Height = 720; 
+  
+12.     trt__GetVideoSourcesResponse->VideoSources[0].Resolution->Width = 1280; 
+  
+13.     trt__GetVideoSourcesResponse->VideoSources[0].token = (char *)soap_mallo
+c(soap, sizeof(char)*INFO_LENGTH);   14.     strcpy(trt__GetVideoSourcesResponse->VideoSources[0].token,"GhostyuSourc
+e_token"); //注意这里需要和GetProfile中的sourcetoken相同   
+15.    
+16.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging =(struct tt__Imagi
+ngSettings*)soap_malloc(soap, sizeof(struct tt__ImagingSettings));   
+17.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->Brightness = (flo
+at*)soap_malloc(soap,sizeof(float));   
+18.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->Brightness[0] = 1
+28;   
+19.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->ColorSaturation =
+ (float*)soap_malloc(soap,sizeof(float));   
+20.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->ColorSaturation[0
+] = 128;   
+21.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->Contrast = (float
+*)soap_malloc(soap,sizeof(float));   
+22.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->Contrast[0] = 128
+;   
+23.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->IrCutFilter = (in
+t *)soap_malloc(soap,sizeof(int));   
+24.     *trt__GetVideoSourcesResponse->VideoSources[0].Imaging->IrCutFilter = 0;
+    
+25.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->Sharpness = (floa
+t*)soap_malloc(soap,sizeof(float));   
+26.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->Sharpness[0] = 12
+8;   
+27.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->BacklightCompensa
+tion = (struct tt__BacklightCompensation*)soap_malloc(soap, sizeof(struct tt
+__BacklightCompensation));   
+28.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->BacklightCompensa
+tion->Mode = 0;   
+29.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->BacklightCompensa
+tion->Level = 20;   
+30.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->Exposure = NULL; 
+  
+31.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->Focus = NULL;   
+32.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->WideDynamicRange 
+= (struct tt__WideDynamicRange*)soap_malloc(soap, sizeof(struct tt__WideDyna
+micRange));   
+33.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->WideDynamicRange-
+>Mode = 0;      
+34.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->WideDynamicRange-
+>Level = 20;   35.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->WhiteBalance = (s
+truct tt__WhiteBalance*)soap_malloc(soap, sizeof(struct tt__WhiteBalance)); 
+  
+36.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->WhiteBalance->Mod
+e = 0;    
+37.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->WhiteBalance->CrG
+ain = 0;    
+38.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->WhiteBalance->CbG
+ain = 0;    
+39.     trt__GetVideoSourcesResponse->VideoSources[0].Imaging->Extension = NULL;
+   
+40.     trt__GetVideoSourcesResponse->VideoSources[0].Extension = NULL;     
+41.     return SOAP_OK;   
+42. }   __tmd__GetVideoSources最重要的是token的填充必须要和下面profile中的
+sourcetoken相同需要匹配到这个视频源  4、实现GetProfiles命令 [cpp] view plaincopy
+ 1. size = 1;   
+2. trt__GetProfilesResponse->Profiles =(struct tt__Profile *)soap_malloc(soap, 
+sizeof(struct tt__Profile) * size);   
+3. trt__GetProfilesResponse->__sizeProfiles = size;   
+4.    
+5. i=0;   
+6. trt__GetProfilesResponse->Profiles[i].Name = (char *)soap_malloc(soap,sizeof
+(char)*MAX_PROF_TOKEN);   
+7. strcpy(trt__GetProfilesResponse->Profiles[i].Name,"my_profile");   
+8. trt__GetProfilesResponse->Profiles[i].token= (char *)soap_malloc(soap,sizeof
+(char)*MAX_PROF_TOKEN);   
+9. strcpy(trt__GetProfilesResponse->Profiles[i].token,"token_profile");   
+10. trt__GetProfilesResponse->Profiles[i].fixed = _false;   
+11. trt__GetProfilesResponse->Profiles[i].__anyAttribute = NULL;   除了上面的基本信息还需要填充两大项VideoSourceConfiguration和
+VideoEncoderConfiguration一个用于描述视频源的信息另外一个描述视频的编码信息 先给VideoSourceConfiguration分配空间 [cpp] view plaincopy
+ 1. trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration = (struct tt_
+_VideoSourceConfiguration *)soap_malloc(soap,sizeof(struct tt__VideoSourceCo
+nfiguration ));   
+2. trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->Name = (char
+ *)soap_malloc(soap,sizeof(char)*MAX_PROF_TOKEN);   
+3. trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->token = (cha
+r *)soap_malloc(soap,sizeof(char)*MAX_PROF_TOKEN);   
+4. trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->SourceToken 
+= (char *)soap_malloc(soap,sizeof(char)*MAX_PROF_TOKEN);   
+5. trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->Bounds = (st
+ruct tt__IntRectangle *)soap_malloc(soap,sizeof(struct tt__IntRectangle));   然后在填充它 [cpp] view plaincopy
+ 1. /*注意SourceToken*/   
+2. strcpy(trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->Name,
+"VS_Name");   
+3. strcpy(trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->token
+,"VS_Token");   
+4. strcpy(trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->Sourc
+eToken,"GhostyuSource_token"); /*必须与__tmd__GetVideoSources中的token相同
+*/   
+5. trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->UseCount = 1
+;   
+6. trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->Bounds->x = 
+1;   
+7. trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->Bounds->y = 
+1;   
+8. trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->Bounds->heig
+ht = 720;   
+9. trt__GetProfilesResponse->Profiles[i].VideoSourceConfiguration->Bounds->widt
+h = 1280;   如果是指针必须先用soap_malloc分配内存然后才能赋值 下面是VideoEncoderConfiguration [cpp] view plaincopy
+ 1. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration = (struct tt
+__VideoEncoderConfiguration *)soap_malloc(soap,sizeof(struct tt__VideoEncode
+rConfiguration));   
+2. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->Name = (cha
+r *)soap_malloc(soap,sizeof(char)*MAX_PROF_TOKEN);   3. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->token= (cha
+r *)soap_malloc(soap,sizeof(char)*MAX_PROF_TOKEN);   
+4. strcpy(trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->Name
+,"VE_Name1");   
+5. strcpy(trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->toke
+n,"VE_token1");   
+6. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->UseCount = 
+1;   
+7. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->Quality = 1
+0;   
+8. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->Encoding = 
+1;//JPEG = 0, MPEG4 = 1, H264 = 2;   
+9. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->Resolution 
+= (struct tt__VideoResolution *)soap_malloc(soap, sizeof(struct tt__VideoRes
+olution));   
+10. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->Resolution-
+>Height = 720;   
+11. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->Resolution-
+>Width = 1280;   
+12. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->RateControl
+ = (struct tt__VideoRateControl *)soap_malloc(soap, sizeof(struct tt__VideoR
+ateControl));   
+13. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->RateControl
+->FrameRateLimit = 30;   
+14. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->RateControl
+->EncodingInterval = 1;   
+15. trt__GetProfilesResponse->Profiles[i].VideoEncoderConfiguration->RateControl
+->BitrateLimit = 500;   5、GetVideoSourceConfiguration和
+GetVideoEncoderConfiguration [cpp] view plaincopy
+ 1. int  __trt__GetVideoSourceConfiguration(struct soap* soap, struct _trt__GetV
+ideoSourceConfiguration *trt__GetVideoSourceConfiguration, struct _trt__GetV
+ideoSourceConfigurationResponse *trt__GetVideoSourceConfigurationResponse)   
+2. {   
+3.     DBG("__trt__GetVideoSourceConfiguration\n");   
+4.     //该函数必要live video需要   
+5.     return SOAP_OK;   
+6. }   
+7.    8. int  __trt__GetVideoEncoderConfiguration(struct soap* soap, struct _trt__Get
+VideoEncoderConfiguration *trt__GetVideoEncoderConfiguration, struct _trt__G
+etVideoEncoderConfigurationResponse *trt__GetVideoEncoderConfigurationRespon
+se)   
+9. {   
+10.     DBG("__trt__GetVideoEncoderConfiguration\n");   
+11.     return SOAP_OK;   
+12. }   6、GetVideoEncoderConfigurationOptions [cpp] view plaincopy
+ 1. int  __trt__GetVideoEncoderConfigurationOptions(struct soap* soap, struct _t
+rt__GetVideoEncoderConfigurationOptions *trt__GetVideoEncoderConfigurationOp
+tions, struct _trt__GetVideoEncoderConfigurationOptionsResponse *trt__GetVid
+eoEncoderConfigurationOptionsResponse)   
+2. {   
+3.     DBG("__trt__GetVideoEncoderConfigurationOptions\n");   
+4.     //该函数必要video streaming需要   
+5.     return SOAP_OK;   
+6. }   以上5、6不分的代码直接返回SOAP_OK即可正常来说是应该填充的这里不影响RTSP 
+Video Stream暂时就不去动它 四、运行live555MediaServer服务器 live555官网有很多测试文件我这里用的是MPEG4的测试文件路劲为
+rtsp://192.168.1.201/petrov.m4e 五、启动Onvif Device Manager测试 有一个问题OnvifDeviceManager的并不能自动发现设备OnvifTestTool可以还好
+它提供了手动添加功能 
+单击add添加如下内容http://192.168.1.233/onvif/device_service 
+注意我在程序中固定了两个IPlinux192.168.1.233windows192.168.1.201这里需
+看情况修改 
+测试截图 1、Live video  2、Video streaming  3、Profiles  最后是运行的live555 rtsp服务器  
+终端打印的DEBUG信息  
+源代码下载地址http://download.csdn.net/detail/ghostyu/4796093 
+【来自http://blog.csdn.net/ghostyughostyu#163.com】 
+  onvif规范的实现成功实现ONVIF协议RTSP-Video-Stream
+与OnvifDeviceManager的视频对接 
+在前几篇中虽然已经实现了rtsp视频流的对接但是还要做的工作还非常多onvif本来
+就是一个覆盖面非常广的一个协议每一个功能都要填充大量的函数。而且稍不注意就会出
+现segmentation fault错误。下面把我之前开发调试时的经验写下来希望能够帮助有这方
+面需求的人。【来自http://blog.csdn.net/ghostyu】 
+1、打开onvif调试开关以便让onvif打印一些可用的调试信息。 
+在Makefile中添加调试宏定义如: CC = gcc -DDEBUG 
+2、打开调试宏后默认在程序运行的目录产生三个文件 
+RECV.log 
+SENT.log 
+TEST.log 
+RECV.log是onvif接收到的SOAP数据没接收一条都会在RECV.log中记录 
+SENT.log是onvif发送出去的SOAP数据没发送一套也会在SENT.log中生成记录 
+最后是TEST.log如果说RECV和SENT可以用wireshark工具抓包代替那么TEST.log
+是谁也替代不了的TEST.log记录了onvif的实时的工作状态。 
+尤其当出现segmentation fault错误TEST.log就成了唯一一个能够定位到具体内存出错
+的地方了。 
+3、最常见的错误segmentation fault错误的解决方法 
+segmentation fault错误是onvif开发过程最常见的错误至少我是这样的主要是由于访问
+了没有分配地址的内存导致的在填充功能函数时很容易漏掉为必须的结构体分配内存
+导致gSoap产生的代码会在不知情的状况下访问该结构体然后报segmentation fault错
+误。那如何快速的定位到内存出错的地方呢 有人说使用GDB、在这里GDB调试工具起不到什么作用的因为GDB定位到的内存访问
+错误是真的定位到访问时的那一条代码而onvif中访问结构体内存的代码是有gSOAP
+自动产生的代码本身并没有错是最高一层的填充错误这时候gdb就显得无能为力了。
+只能通过TEST.log定位。 
+ 
+我故意将将成员变量Uri的内存非配注释掉然后编译运行程序出现内存错误 
+ 
+虽然我在函数里打印了一条信息表明出错的函数现在我们完全可以忽略该信息直接
+看TEST.log  
+出现内存错误等致命错误程序会立刻结束所以打开TEST.log直接看最后面的信息 [plain] view plaincopy 1. Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''   
+2. Lookup location=0xbfd44a30 type=1548: not found   
+3. Element begin tag='trt:GetSnapshotUriResponse' level='2' id='0' type=''   
+4. Element begin tag='trt:MediaUri' level='3' id='0' type=''   最后一条显示的Element begin tag=' trt:MediaUri'说明程序在开始编码
+trt:GetSnapshotUriResponse的trt:MediaUri出了问题这里回过头来看源代码  结构体的第一条就是Uri假如我注释的并不是Uri而是__any等那么TEST.log中的最
+后一条就肯定不是上面那样子的我们可以再一些测试说明TEST.log对于查找错误的重
+要性。 
+修改的程序如下 
+ 
+重新运行程序运行到这段代码的时候就会产生一个内存错误我们再次打开TEST.log 
+ 从打印的信息来看tt:Timeout已经编码结束了然后才出现的问题这是再看看源代码中
+Timeout后面的成员变量是什么
+ 
+所以就很快的定位到出错的地方了。 
+ 
+但是如果使用gdb调试会是什么样的呢还是可以做一下测试 
+ 
+这能看出什么啊对于调试onvifgdb就显得那么多余了。。。 
+ 
